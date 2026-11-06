@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+const { title = 'Kubernautic — Agentic AI for Kubernetes Operations', description = 'Meet the intelligent operations layer for Kubernetes. Observe, reason, recommend and govern with Kubernautic.' } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  {href:'/platform/',label:'Platform'},
+  {href:'/agentic-ai/',label:'Agentic AI'},
+  {href:'/architecture/',label:'Architecture'},
+  {href:'/open-source/',label:'Open Source'},
+  {href:'/enterprise/',label:'Enterprise'}
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070c17" />
+  <meta name="description" content={description}/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={new URL(path, 'https://kubernautic.com').toString()} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={new URL(path, 'https://kubernautic.com').toString()} />
+  <title>{title}</title>
+</head>
+<body>
+  <div class="site-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="shell nav-wrap">
+      <a class="brand" href="/" aria-label="Kubernautic Home"><span class="brand-symbol">K<span class="spark"></span></span><span>kubernautic<span class="brand-period">.</span></span></a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        {nav.map(item => <a class:list={['nav-link', {'active':path===item.href}]} href={item.href}>{item.label}</a>)}
+      </nav>
+      <div class="nav-actions"><a class="nav-demo" href="/console/">Console Preview <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button></div>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>{nav.map(item => <a href={item.href}>{item.label}</a>)}<a href="/console/">Console Preview</a></nav>
+  </header>
+  <main><slot /></main>
+  <footer class="footer">
+    <div class="shell footer-grid"><div><a class="brand" href="/"><span class="brand-symbol">K<span class="spark"></span></span><span>kubernautic<span class="brand-period">.</span></span></a><p>Intelligence for cloud-native operations.<br/>Built on open foundations.</p></div><div class="footer-col"><strong>Explore</strong><a href="/platform/">Platform</a><a href="/agentic-ai/">Agentic AI</a><a href="/architecture/">Architecture</a></div><div class="footer-col"><strong>Connect</strong><a href="/console/">Console Preview</a><a href="/enterprise/">Enterprise</a><a href="/contact/">Contact</a></div><div class="footer-col"><strong>Ecosystem</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/open-source/">Open source</a></div></div>
+    <div class="shell footer-bottom"><span>© {new Date().getFullYear()} Kubernautic. A concept in the OpenKubes ecosystem.</span><span>Open systems. Human control.</span></div>
+  </footer>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const mobile = document.querySelector('#mobile-nav');
+    toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded',String(!open)); if(mobile) mobile.hidden = open; });
+  </script>
+</body>
+</html>
