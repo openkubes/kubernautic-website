@@ -1,4 +1,21 @@
 ---
-import Base from '../layouts/Base.astro';import CTA from '../components/CTA.astro';
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import ArchitectureExplorer from '../components/ArchitectureExplorer.astro';
 ---
-<Base title="Architecture | Kubernautic"><section class="shell page-hero"><span class="eyebrow">ARCHITECTURE / GUIDING PRINCIPLES</span><h1>Open foundations.<br/><span class="gradient-text">Controlled intelligence.</span></h1><p>Our design direction connects Kubernetes visibility, AI-supported interpretation and explicit operational governance. This page describes the intended architecture, not a claim that every component is already shipped.</p></section><section class="shell section single-section"><div class="content-grid"><article class="content-tile"><div class="tile-icon">⌁</div><h3>Signal layer</h3><p>Kubernetes API, events, workload inventory, logs and telemetry as authorized.</p></article><article class="content-tile"><div class="tile-icon">◈</div><h3>Context layer</h3><p>Infrastructure relationships, application state, timing and causal hypotheses.</p></article><article class="content-tile"><div class="tile-icon">✳</div><h3>Intelligence layer</h3><p>Agentic reasoning and interpretable recommendations for operators.</p></article><article class="content-tile"><div class="tile-icon">◇</div><h3>Governance layer</h3><p>Policy checks, scoped access, approvals and auditability.</p></article><article class="content-tile"><div class="tile-icon">⬡</div><h3>Console layer</h3><p>A guided interface for exploration, operational context and next steps.</p></article><article class="content-tile"><div class="tile-icon">↗</div><h3>Open integration</h3><p>Architecture that can evolve with the Kubernetes and OpenKubes ecosystem.</p></article></div></section><CTA/></Base>
+<Base title="Architecture | Kubernautic">
+  <section class="shell page-hero">
+    <span class="eyebrow">ARCHITECTURE / GUIDING PRINCIPLES</span>
+    <h1>Open foundations.<br/><span class="gradient-text">Controlled intelligence.</span></h1>
+    <p>Explore an intended flow from Kubernetes signals to explainable recommendations, shaped by operator governance. This is a design concept, not a claim that every component is shipped.</p>
+  </section>
+  <section class="shell section single-section">
+    <ArchitectureExplorer />
+    <div class="content-grid">
+      <article class="content-tile"><div class="tile-icon">⌁</div><h3>Authorized signals</h3><p>Scoped access to Kubernetes events, workload inventory, metrics and logs.</p></article>
+      <article class="content-tile"><div class="tile-icon">✳</div><h3>Evidence-driven analysis</h3><p>Contextual hypotheses and explainable next steps that operators can review.</p></article>
+      <article class="content-tile"><div class="tile-icon">◇</div><h3>Human governance</h3><p>Policies, approval boundaries and auditability as design principles.</p></article>
+    </div>
+  </section>
+  <CTA />
+</Base>
