@@ -1,4 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
+import IncidentExplorer from '../components/IncidentExplorer.astro';
 ---
-<Base title="Console Preview | Kubernautic" description="Learn about the planned read-only Kubernautic Console Preview for registered visitors."><section class="shell page-hero"><span class="eyebrow">PRODUCT DISCOVERY / COMING SOON</span><h1>See Kubernetes<br/><span class="gradient-text">through a new lens.</span></h1><p>We are preparing a registered, read-only preview of the Kubernautic Console. Explore the interface and sample operational insights—without changing cluster resources.</p><div class="button-group"><a class="btn btn-primary" href="/contact/">Ask about Early Access ↗</a><a class="btn btn-secondary" href="/platform/">Explore the Platform ↗</a></div></section><section class="shell section single-section"><div class="note-panel"><div><span class="eyebrow">WHAT THE PREVIEW WILL INCLUDE</span><h2>Shared demo environment. Restricted access.</h2><p>Registered users will be assigned a scoped, read-only view of demo workloads. Sensitive data and privileged actions will not be exposed. Registration and authentication are not yet live.</p></div><span class="mock-pill">COMING SOON</span></div><div class="info-line"><strong>Access</strong>Registration and identity verification when launched</div><div class="info-line"><strong>Environment</strong>Shared Kubernetes demo cluster</div><div class="info-line"><strong>Permissions</strong>Strict read-only, namespace-scoped permissions</div><div class="info-line"><strong>Production</strong>Dedicated enterprise deployments on request</div></section></Base>
+<Base title="Incident Experience | Kubernautic" description="Explore a guided, fully simulated Kubernetes CrashLoopBackOff investigation, from signals to governed recommendations.">
+  <section class="shell page-hero incident-page-hero">
+    <span class="eyebrow">PRODUCT EXPERIENCE / INTERACTIVE WALKTHROUGH</span>
+    <h1>From incident noise<br/><span class="gradient-text">to operational clarity.</span></h1>
+    <p>Step inside a simulated Kubernetes incident. See how evidence, context and AI-assisted recommendations could help engineers make informed decisions — without touching a real cluster.</p>
+    <div class="button-group">
+      <a class="btn btn-primary" href="#incident-experience">Start guided walkthrough ↗</a>
+      <a class="btn btn-secondary" href="/architecture/">Explore the Architecture ↗</a>
+    </div>
+  </section>
+  <section class="shell incident-section" id="incident-experience">
+    <IncidentExplorer />
+  </section>
+  <section class="shell section single-section incident-next">
+    <div class="note-panel">
+      <div>
+        <span class="eyebrow">THE REAL CONSOLE / COMING LATER</span>
+        <h2>A read-only preview is next.</h2>
+        <p>This walkthrough is a static, synthetic scenario. The separately planned registered Console Preview will use scoped read-only access to a shared demo cluster. There is no signup, cluster connection or remediation execution on this page.</p>
+      </div>
+      <a class="btn btn-primary" href="/contact/">Ask about Early Access ↗</a>
+    </div>
+    <div class="info-line"><strong>Demo</strong>Static scenario, no real Kubernetes API calls</div>
+    <div class="info-line"><strong>Safety</strong>No mutations, no credentials, no execution</div>
+    <div class="info-line"><strong>Production</strong>Dedicated console deployment assessed per customer</div>
+  </section>
+</Base>

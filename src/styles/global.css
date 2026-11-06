@@ -1475,3 +1475,9 @@ h2 {
     padding-top: 48px;
   }
 }
+
+/* Guided Incident Experience page */
+.incident-page-hero { padding-bottom: 55px; }
+.incident-section { padding-bottom: 15px; }
+.incident-next { padding-top: 70px; }
+@media (max-width: 620px) { .incident-next { padding-top: 45px; } }
