@@ -10,6 +10,15 @@ const controls = [
   { no: '06', icon: '✳', title: 'AI guardrails', description: 'Review tool permissions, prompt/data boundaries, failure modes and safeguards against unauthorized actions.' }
 ];
 
+const technicalDetails = {
+  '01': 'Review OIDC integration, namespace and cluster scopes, service-account tokens, and periodic permission audits.',
+  '02': 'Define recommendation-only behavior, approval gates, permitted actions, and separation of duties before production use.',
+  '03': 'Document inference location, outbound connections, telemetry filtering, retention periods, and model-provider agreements.',
+  '04': 'Link proposed changes to GitOps pull requests, approvals, policy decisions, and immutable operational records.',
+  '05': 'Threat-model network paths, tenant boundaries, secret handling, and blast-radius limits for each dedicated deployment.',
+  '06': 'Restrict agent tools, validate inputs and outputs, assess prompt injection risks, and define safe failure behavior.'
+};
+
 const review = [
   { question: 'Where does the console run?', answer: 'For production, we assess a dedicated environment aligned with your infrastructure and operational needs. On-premises or private-cloud options require a design review.' },
   { question: 'Does AI receive cluster-admin access?', answer: 'No blanket permission is assumed. A proposed deployment must define minimal access for each integration; write operations and agent tools require separate threat modeling and approval.' },
@@ -70,10 +79,28 @@ const review = [
       </div>
       <div class="enterprise-control-grid">
         {controls.map(control => (
-          <article class="enterprise-control-card" tabindex="0">
-            <div class="enterprise-control-top"><span>{control.no} / CONTROL AREA</span><span aria-hidden="true">{control.icon}</span></div>
-            <h3>{control.title}</h3>
-            <p>{control.description}</p>
+          <article class="enterprise-control-card">
+            <button
+              class="security-flip-trigger"
+              type="button"
+              aria-pressed="false"
+              aria-label={`${control.title}. ${control.description} Technical details: ${technicalDetails[control.no]}. Press to turn the card.`}
+            >
+              <span class="security-flip-inner" aria-hidden="true">
+                <span class="security-flip-face security-flip-front">
+                  <span class="enterprise-control-top"><span>{control.no} / CONTROL AREA</span><span>{control.icon}</span></span>
+                  <strong class="security-flip-title">{control.title}</strong>
+                  <span class="security-flip-description">{control.description}</span>
+                  <span class="security-flip-hint">HOVER OR CLICK TO EXPLORE ↗</span>
+                </span>
+                <span class="security-flip-face security-flip-back">
+                  <span class="enterprise-control-top"><span>{control.no} / TECHNICAL CONSIDERATIONS</span><span>◇</span></span>
+                  <strong class="security-flip-title">{control.title}</strong>
+                  <span class="security-flip-description">{technicalDetails[control.no]}</span>
+                  <span class="security-flip-hint">HOVER AWAY OR CLICK TO RETURN ↶</span>
+                </span>
+              </span>
+            </button>
           </article>
         ))}
       </div>
@@ -125,6 +152,15 @@ const review = [
     </div>
   </section>
 </Base>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.security-flip-trigger').forEach((button) => {
+    button.addEventListener('click', () => {
+      const flipped = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!flipped));
+    });
+  });
+</script>
+
 
 <style>
 .enterprise-hero{padding-bottom:80px}
@@ -179,31 +215,91 @@ const review = [
 @media(max-width:620px){.enterprise-hero{padding-bottom:60px}.enterprise-overview{padding-bottom:65px}.enterprise-diagram{padding:18px}.enterprise-diagram-caption{flex-direction:column}.enterprise-value-grid,.enterprise-control-grid,.enterprise-process-grid{grid-template-columns:1fr}.enterprise-security,.enterprise-questions,.enterprise-bottom{padding:65px 0}.enterprise-process{padding-top:65px;padding-bottom:65px}.enterprise-bottom-panel{padding:30px 20px}.enterprise-control-card{min-height:0}}
 @media(prefers-reduced-motion:reduce){.enterprise-faq-item summary span{transition:none}}
 
-/* One-time 360-degree 3D security-card spin on pointer or keyboard focus. */
-@media (hover: hover) and (pointer: fine) {
-  .enterprise-control-grid { perspective: 1200px; }
-  .enterprise-control-card {
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    will-change: auto;
-  }
-  .enterprise-control-card:hover {
-    animation: security-card-spin 900ms cubic-bezier(.22,.61,.36,1) both;
-  }
+/* Stable 180-degree flip: the hit target never rotates, preventing hover jitter. */
+.enterprise-control-card {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  min-height: 280px;
+  perspective: 1100px;
 }
-.enterprise-control-card:focus-visible {
+.security-flip-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.security-flip-trigger:focus-visible {
   outline: 2px solid #7ceff3;
-  outline-offset: 4px;
-  animation: security-card-spin 900ms cubic-bezier(.22,.61,.36,1) both;
+  outline-offset: 5px;
 }
-@keyframes security-card-spin {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
+.security-flip-inner {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  transform-style: preserve-3d;
+  transition: transform 650ms cubic-bezier(.2,.72,.25,1);
+}
+.security-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 27px;
+  border: 1px solid #2a4457;
+  border-radius: 14px;
+  background: linear-gradient(145deg,#122337,#0d1a2a);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.security-flip-back {
+  transform: rotateY(180deg);
+  border-color: #43818c;
+  background: linear-gradient(145deg,#133543,#0b202d);
+}
+.security-flip-title {
+  display: block;
+  margin: 20px 0 10px;
+  font: 600 21px "Space Grotesk",sans-serif;
+}
+.security-flip-description {
+  display: block;
+  color: #aec2d0;
+  line-height: 1.65;
+  font-size: 14px;
+}
+.security-flip-hint {
+  display: block;
+  margin-top: auto;
+  padding-top: 17px;
+  color: #7ceff3;
+  font: 10px "DM Mono",monospace;
+  letter-spacing: .35px;
+}
+.security-flip-trigger[aria-pressed="true"] .security-flip-inner {
+  transform: rotateY(180deg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .security-flip-trigger:hover .security-flip-inner {
+    transform: rotateY(180deg);
+  }
+  .security-flip-trigger[aria-pressed="true"]:hover .security-flip-inner {
+    transform: rotateY(0deg);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .enterprise-control-card:hover,
-  .enterprise-control-card:focus-visible {
-    animation: none !important;
+  .security-flip-inner {
+    transition: none !important;
   }
 }
 </style>
