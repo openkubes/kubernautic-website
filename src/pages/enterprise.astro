@@ -1,4 +1,181 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const controls = [
+  { no: '01', icon: '⌑', title: 'Identity & least privilege', description: 'Define identity boundaries, service-account scope, RBAC and access review before granting any integration permissions.' },
+  { no: '02', icon: '◇', title: 'Human-governed decisions', description: 'Separate observation, recommendations and execution. Approval paths and policy checks are part of production design.' },
+  { no: '03', icon: '◎', title: 'Data handling & sovereignty', description: 'Evaluate where telemetry, prompts, model inference, logs and audit records are processed, stored and retained.' },
+  { no: '04', icon: '⌁', title: 'Auditability & change control', description: 'Plan for attributable decisions, change history, GitOps integration and traceable operational outcomes.' },
+  { no: '05', icon: '▣', title: 'Operational isolation', description: 'Assess environment boundaries, network policy, outbound access and blast radius for each deployment.' },
+  { no: '06', icon: '✳', title: 'AI guardrails', description: 'Review tool permissions, prompt/data boundaries, failure modes and safeguards against unauthorized actions.' }
+];
+
+const review = [
+  { question: 'Where does the console run?', answer: 'For production, we assess a dedicated environment aligned with your infrastructure and operational needs. On-premises or private-cloud options require a design review.' },
+  { question: 'Does AI receive cluster-admin access?', answer: 'No blanket permission is assumed. A proposed deployment must define minimal access for each integration; write operations and agent tools require separate threat modeling and approval.' },
+  { question: 'Do logs or prompts leave our environment?', answer: 'That depends on the chosen model and hosting design. Data flows, providers, retention and residency must be documented and agreed before deployment.' },
+  { question: 'Is the public demo a production multi-tenant offering?', answer: 'No. The guided incident experience is synthetic. A registered, read-only shared-cluster preview is planned separately. Production multi-tenancy has not been committed to.' }
+];
 ---
-<Base title="Enterprise | Kubernautic"><section class="shell page-hero"><span class="eyebrow">ENTERPRISE / DEDICATED DEPLOYMENT</span><h1>Your environment.<br/><span class="gradient-text">Your operational control.</span></h1><p>Ready to move beyond the preview? Explore a dedicated Kubernautic deployment tailored to your infrastructure, security requirements and operational processes.</p><div class="button-group"><a class="btn btn-primary" href="/contact/">Discuss Your Requirements ↗</a></div></section><section class="shell section single-section"><div class="content-grid"><article class="content-tile"><div class="tile-icon">⬡</div><h3>Dedicated by default</h3><p>Production deployments are assessed and designed for each customer rather than assuming shared multi-tenancy.</p></article><article class="content-tile"><div class="tile-icon">◇</div><h3>Security first</h3><p>Identity, access, policies, data handling and operational boundaries are part of deployment planning.</p></article><article class="content-tile"><div class="tile-icon">⌁</div><h3>Integrate your stack</h3><p>Explore integration with your Kubernetes, GitOps and observability environment.</p></article></div></section></Base>
+<Base title="Enterprise Kubernetes AI Operations | Kubernautic" description="Explore dedicated Kubernautic deployments, security boundaries, human-governed AI and data handling considerations for enterprise Kubernetes operations.">
+  <section class="shell page-hero enterprise-hero">
+    <span class="eyebrow">ENTERPRISE / DEPLOYMENT BY DESIGN</span>
+    <h1>Your infrastructure.<br/><span class="gradient-text">Your policies. Your control.</span></h1>
+    <p>Explore a dedicated Kubernautic operations experience designed around your Kubernetes landscape, security expectations and operating model — with human oversight at its core.</p>
+    <div class="button-group">
+      <a class="btn btn-primary" href="/contact/">Discuss an Enterprise Deployment <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-secondary" href="/architecture/">Explore Architecture <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="enterprise-hero-note"><span aria-hidden="true">◇</span> Dedicated production engagements are scoped individually. No blanket security or compliance certification is claimed.</div>
+  </section>
+
+  <section class="enterprise-overview shell" aria-labelledby="enterprise-overview-title">
+    <div class="enterprise-section-title">
+      <span class="eyebrow">01 / DEPLOYMENT MODEL</span>
+      <h2 id="enterprise-overview-title">Dedicated by design.<br/><em>Integrated on your terms.</em></h2>
+      <p>We start with your infrastructure and risk profile, not an assumption that production customers should share a control plane.</p>
+    </div>
+    <div class="enterprise-diagram" aria-label="Illustrative dedicated deployment model">
+      <div class="enterprise-diagram-caption"><span>CONCEPTUAL REFERENCE MODEL</span><span>NOT A LIVE DEPLOYMENT</span></div>
+      <div class="enterprise-diagram-grid">
+        <div class="enterprise-diagram-card enterprise-customer">
+          <span class="enterprise-mini-label">CUSTOMER ENVIRONMENT</span>
+          <strong>Enterprise Kubernetes</strong>
+          <p>Clusters · Workloads · Telemetry</p>
+          <div class="enterprise-chip-row"><span>Kubernetes API</span><span>Observability</span><span>GitOps</span></div>
+        </div>
+        <div class="enterprise-diagram-link" aria-hidden="true"><span>SCOPED INTEGRATIONS</span><b>⟷</b></div>
+        <div class="enterprise-diagram-card enterprise-control">
+          <span class="enterprise-mini-label">DEDICATED OPERATIONS PLANE</span>
+          <strong>Kubernautic Console</strong>
+          <p>Context · Insights · Recommendations</p>
+          <div class="enterprise-chip-row"><span>Identity & RBAC</span><span>Policy gates</span><span>Audit</span></div>
+        </div>
+      </div>
+      <div class="enterprise-diagram-boundary">◇ Security, network and data-flow boundaries are agreed during architecture review.</div>
+    </div>
+    <div class="enterprise-value-grid">
+      <article><span>01 / OWNERSHIP</span><h3>Infrastructure control</h3><p>Design for customer-specific hosting, access and networking requirements.</p></article>
+      <article><span>02 / OPERATIONS</span><h3>Fits existing practices</h3><p>Evaluate interoperability with Kubernetes, GitOps and existing observability systems.</p></article>
+      <article><span>03 / RISK</span><h3>No assumed shared tenancy</h3><p>Assess production isolation and controls before considering any multi-tenant alternative.</p></article>
+    </div>
+  </section>
+
+  <section class="enterprise-security" aria-labelledby="enterprise-security-title">
+    <div class="shell">
+      <div class="enterprise-section-title">
+        <span class="eyebrow">02 / SECURITY & GOVERNANCE</span>
+        <h2 id="enterprise-security-title">Trust is an <em>architecture decision.</em></h2>
+        <p>Enterprise AI operations require explicit boundaries. These are the topics we put on the table before a production rollout.</p>
+      </div>
+      <div class="enterprise-control-grid">
+        {controls.map(control => (
+          <article class="enterprise-control-card">
+            <div class="enterprise-control-top"><span>{control.no} / CONTROL AREA</span><span aria-hidden="true">{control.icon}</span></div>
+            <h3>{control.title}</h3>
+            <p>{control.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell enterprise-process" aria-labelledby="enterprise-process-title">
+    <div class="enterprise-section-title">
+      <span class="eyebrow">03 / HOW WE ENGAGE</span>
+      <h2 id="enterprise-process-title">From evaluation<br/>to an <em>agreed design.</em></h2>
+      <p>Production deployment is a project, not a one-click sign-up.</p>
+    </div>
+    <div class="enterprise-process-grid">
+      <article><span>01</span><h3>Discover</h3><p>Understand workloads, stakeholder goals, identity model and operational responsibilities.</p></article>
+      <article><span>02</span><h3>Review</h3><p>Assess threat model, data paths, integrations and required platform permissions.</p></article>
+      <article><span>03</span><h3>Design</h3><p>Agree architecture, governance controls, deployment scope and acceptance criteria.</p></article>
+      <article><span>04</span><h3>Validate</h3><p>Plan a controlled proof of concept before any production rollout decision.</p></article>
+    </div>
+  </section>
+
+  <section class="enterprise-questions" aria-labelledby="enterprise-questions-title">
+    <div class="shell enterprise-questions-layout">
+      <div class="enterprise-questions-intro">
+        <span class="eyebrow">04 / QUESTIONS THAT MATTER</span>
+        <h2 id="enterprise-questions-title">Ask the <em>hard questions.</em></h2>
+        <p>These are the conversations an enterprise architecture and security team should have before considering autonomous operations.</p>
+      </div>
+      <div class="enterprise-faq">
+        {review.map((item, index) => (
+          <details class="enterprise-faq-item" open={index === 0}>
+            <summary>{item.question}<span aria-hidden="true">+</span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell enterprise-bottom">
+    <div class="enterprise-bottom-panel">
+      <span class="eyebrow">READY TO TALK ARCHITECTURE?</span>
+      <h2>Bring your constraints.<br/><em>Let's design around them.</em></h2>
+      <p>Tell us about your Kubernetes environment, security expectations and operational goals. We can explore whether a dedicated Kubernautic deployment is a fit.</p>
+      <div class="button-group">
+        <a class="btn btn-primary" href="/contact/">Start the Conversation <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-secondary" href="/console/">Try the Guided Incident Demo <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="enterprise-disclaimer">The interactive incident demo is synthetic. A registered read-only Console Preview is planned. This site does not represent a certified, generally available production offering.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+.enterprise-hero{padding-bottom:80px}
+.enterprise-hero p{max-width:660px}
+.enterprise-hero-note{display:flex;gap:12px;align-items:center;max-width:780px;margin-top:30px;color:#92a9bc;font:11px/1.6 "DM Mono",monospace}
+.enterprise-hero-note span{color:#7ceff3;font-size:20px}
+.enterprise-section-title{max-width:790px;margin-bottom:40px}
+.enterprise-section-title h2,.enterprise-questions h2,.enterprise-bottom h2{font-size:clamp(34px,4.2vw,55px);line-height:1.12;letter-spacing:-2px;margin:18px 0 22px}
+.enterprise-section-title h2 em,.enterprise-questions h2 em,.enterprise-bottom h2 em{color:#7ceff3;font-style:normal}
+.enterprise-section-title p,.enterprise-questions-intro p,.enterprise-bottom-panel>p{max-width:680px;line-height:1.75;color:#b1c3d3}
+.enterprise-overview{padding:35px 0 110px}
+.enterprise-diagram{border:1px solid #315063;border-radius:18px;padding:30px;background:radial-gradient(ellipse at 70% 18%,rgba(39,131,147,.16),transparent 65%),#0b1626}
+.enterprise-diagram-caption{display:flex;justify-content:space-between;gap:14px;color:#7ceff3;font:10px "DM Mono",monospace;letter-spacing:1px}
+.enterprise-diagram-grid{display:grid;grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);align-items:center;gap:20px;margin:32px 0}
+.enterprise-diagram-card{min-width:0;padding:27px;border:1px solid #315468;border-radius:14px;background:linear-gradient(150deg,#14293a,#0d1b2e)}
+.enterprise-mini-label{font:10px "DM Mono",monospace;letter-spacing:1.1px;color:#7ceff3}
+.enterprise-diagram-card strong{display:block;margin:17px 0 8px;font:600 clamp(21px,2vw,26px) "Space Grotesk",sans-serif}
+.enterprise-diagram-card p{color:#b2c5d4;margin:0 0 22px;font-size:13px}
+.enterprise-chip-row{display:flex;gap:7px;flex-wrap:wrap}
+.enterprise-chip-row span{border:1px solid #38566a;border-radius:5px;color:#bed7e2;padding:7px 9px;font:10px "DM Mono",monospace}
+.enterprise-diagram-link{text-align:center;color:#83cfd6;font:9px "DM Mono",monospace;letter-spacing:1px}
+.enterprise-diagram-link b{display:block;font-size:39px;font-weight:400;margin-top:10px;color:#7ceff3}
+.enterprise-diagram-boundary{border-top:1px solid #294657;padding-top:21px;color:#a7c0cd;font:11px/1.6 "DM Mono",monospace}
+.enterprise-value-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+.enterprise-value-grid article{padding:24px;border:1px solid #21394d;border-radius:12px;background:#0c1727}
+.enterprise-value-grid article>span,.enterprise-control-top,.enterprise-process-grid article>span{font:10px "DM Mono",monospace;letter-spacing:1px;color:#7ceff3}
+.enterprise-value-grid h3,.enterprise-control-card h3,.enterprise-process h3{font-size:21px;margin:18px 0 10px}
+.enterprise-value-grid p,.enterprise-control-card p,.enterprise-process p{margin:0;color:#aec2d0;line-height:1.7;font-size:14px}
+.enterprise-security{padding:104px 0;background:#0b1321;border-top:1px solid #1d3345;border-bottom:1px solid #1d3345}
+.enterprise-control-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.enterprise-control-card{padding:29px;border:1px solid #2a4457;border-radius:14px;background:linear-gradient(145deg,#122337,#0d1a2a);min-height:260px}
+.enterprise-control-top{display:flex;justify-content:space-between;align-items:center}
+.enterprise-control-top span:last-child{font-size:25px}
+.enterprise-process{padding-top:105px;padding-bottom:105px}
+.enterprise-process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.enterprise-process-grid article{border-top:1px solid #36738a;padding:22px 15px 0 0}
+.enterprise-process-grid article>span{font-size:19px}
+.enterprise-questions{background:#0c1625;padding:100px 0;border-block:1px solid #203749}
+.enterprise-questions-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}
+.enterprise-faq{display:flex;flex-direction:column;gap:11px}
+.enterprise-faq-item{border:1px solid #2c485a;border-radius:10px;background:#101e2f;padding:0 22px}
+.enterprise-faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:20px;cursor:pointer;font-weight:600;padding:20px 0;list-style:none}
+.enterprise-faq-item summary::-webkit-details-marker{display:none}
+.enterprise-faq-item summary span{color:#7ceff3;font-size:21px}
+.enterprise-faq-item[open] summary span{transform:rotate(45deg)}
+.enterprise-faq-item p{color:#afc5d3;line-height:1.7;margin:0;padding-bottom:21px}
+.enterprise-bottom{padding:100px 0}
+.enterprise-bottom-panel{position:relative;overflow:hidden;border:1px solid #386c77;background:radial-gradient(ellipse at 85% 8%,rgba(77,221,221,.15),transparent 60%),linear-gradient(135deg,#112838,#091522);border-radius:20px;padding:65px}
+.enterprise-bottom-panel>p{max-width:690px}
+.enterprise-disclaimer{margin-top:34px!important;font-size:12px!important;line-height:1.6!important;color:#93aaba!important}
+@media(max-width:1000px){.enterprise-diagram-grid{grid-template-columns:1fr;gap:7px}.enterprise-diagram-link b{margin:0;transform:rotate(90deg)}.enterprise-diagram-link{padding:10px}.enterprise-value-grid,.enterprise-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.enterprise-questions-layout{grid-template-columns:1fr;gap:25px}.enterprise-process-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:35px}}
+@media(max-width:620px){.enterprise-hero{padding-bottom:60px}.enterprise-overview{padding-bottom:65px}.enterprise-diagram{padding:18px}.enterprise-diagram-caption{flex-direction:column}.enterprise-value-grid,.enterprise-control-grid,.enterprise-process-grid{grid-template-columns:1fr}.enterprise-security,.enterprise-questions,.enterprise-bottom{padding:65px 0}.enterprise-process{padding-top:65px;padding-bottom:65px}.enterprise-bottom-panel{padding:30px 20px}.enterprise-control-card{min-height:0}}
+@media(prefers-reduced-motion:reduce){.enterprise-faq-item summary span{transition:none}}
+</style>
