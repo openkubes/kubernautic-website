@@ -70,7 +70,7 @@ const review = [
       </div>
       <div class="enterprise-control-grid">
         {controls.map(control => (
-          <article class="enterprise-control-card">
+          <article class="enterprise-control-card" tabindex="0">
             <div class="enterprise-control-top"><span>{control.no} / CONTROL AREA</span><span aria-hidden="true">{control.icon}</span></div>
             <h3>{control.title}</h3>
             <p>{control.description}</p>
@@ -178,4 +178,32 @@ const review = [
 @media(max-width:1000px){.enterprise-diagram-grid{grid-template-columns:1fr;gap:7px}.enterprise-diagram-link b{margin:0;transform:rotate(90deg)}.enterprise-diagram-link{padding:10px}.enterprise-value-grid,.enterprise-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.enterprise-questions-layout{grid-template-columns:1fr;gap:25px}.enterprise-process-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:35px}}
 @media(max-width:620px){.enterprise-hero{padding-bottom:60px}.enterprise-overview{padding-bottom:65px}.enterprise-diagram{padding:18px}.enterprise-diagram-caption{flex-direction:column}.enterprise-value-grid,.enterprise-control-grid,.enterprise-process-grid{grid-template-columns:1fr}.enterprise-security,.enterprise-questions,.enterprise-bottom{padding:65px 0}.enterprise-process{padding-top:65px;padding-bottom:65px}.enterprise-bottom-panel{padding:30px 20px}.enterprise-control-card{min-height:0}}
 @media(prefers-reduced-motion:reduce){.enterprise-faq-item summary span{transition:none}}
+
+/* One-time 360-degree 3D security-card spin on pointer or keyboard focus. */
+@media (hover: hover) and (pointer: fine) {
+  .enterprise-control-grid { perspective: 1200px; }
+  .enterprise-control-card {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: auto;
+  }
+  .enterprise-control-card:hover {
+    animation: security-card-spin 900ms cubic-bezier(.22,.61,.36,1) both;
+  }
+}
+.enterprise-control-card:focus-visible {
+  outline: 2px solid #7ceff3;
+  outline-offset: 4px;
+  animation: security-card-spin 900ms cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes security-card-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .enterprise-control-card:hover,
+  .enterprise-control-card:focus-visible {
+    animation: none !important;
+  }
+}
 </style>
