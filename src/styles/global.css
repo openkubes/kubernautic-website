@@ -1459,3 +1459,19 @@ h2 {
 .audience-disclaimer { margin-top: 18px; font-size: 12px; color: #8da0b3; line-height: 1.6; }
 @media (max-width: 900px) { .audience-grid { grid-template-columns: 1fr; } .audience-card { min-height: 0; padding: 24px; } }
 @media (prefers-reduced-motion: reduce) { .audience-card { transition: none; } .audience-card:hover { transform: none; } }
+
+/* Tighten the transition between audience cards and the intelligent loop. */
+.audience-section {
+  padding-bottom: 40px;
+}
+.audience-section + #how-it-works {
+  padding-top: 64px;
+}
+@media (max-width: 620px) {
+  .audience-section {
+    padding-bottom: 28px;
+  }
+  .audience-section + #how-it-works {
+    padding-top: 48px;
+  }
+}
