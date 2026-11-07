@@ -75,7 +75,7 @@ const structuredData = {
   <div class="site-glow" aria-hidden="true"></div>
   <header class="site-header">
     <div class="shell nav-wrap">
-      <a class="brand" href="/" aria-label="Kubernautic Home"><span class="brand-symbol">K<span class="spark"></span></span><BrandWordmark /></a>
+      <a class="brand" href="/" aria-label="Kubernautic Home"><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a>
       <nav class="desktop-nav" aria-label="Primary navigation">
         {nav.map(item => <a class:list={['nav-link', {'active':path===item.href}]} href={item.href}>{item.label}</a>)}
       </nav>
@@ -85,7 +85,7 @@ const structuredData = {
   </header>
   <main><slot /></main>
   <footer class="footer">
-    <div class="shell footer-grid"><div><a class="brand" href="/"><span class="brand-symbol">K<span class="spark"></span></span><BrandWordmark /></a><p>Intelligence for cloud-native operations.<br/>Built on open foundations.</p></div><div class="footer-col"><strong>Explore</strong><a href="/platform/">Platform</a><a href="/agentic-ai/">Agentic AI</a><a href="/architecture/">Architecture</a></div><div class="footer-col"><strong>Connect</strong><a href="/console/">Console Preview</a><a href="/enterprise/">Enterprise</a><a href="/contact/">Contact</a></div><div class="footer-col"><strong>Ecosystem</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/open-source/">Open source</a></div></div>
+    <div class="shell footer-grid"><div><a class="brand" href="/"><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a><p>Intelligence for cloud-native operations.<br/>Built on open foundations.</p></div><div class="footer-col"><strong>Explore</strong><a href="/platform/">Platform</a><a href="/agentic-ai/">Agentic AI</a><a href="/architecture/">Architecture</a></div><div class="footer-col"><strong>Connect</strong><a href="/console/">Console Preview</a><a href="/enterprise/">Enterprise</a><a href="/contact/">Contact</a></div><div class="footer-col"><strong>Ecosystem</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/open-source/">Open source</a></div></div>
     <div class="shell footer-bottom"><span>© {new Date().getFullYear()} Kubernautic. A concept in the OpenKubes ecosystem.</span><span>Open systems. Human control.</span></div>
   </footer>
   <script>
