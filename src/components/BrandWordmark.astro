@@ -5,7 +5,7 @@ const letters = [{"char":"K","color":"#27A8F2"},{"char":"U","color":"#48BDF7"},{
   {letters.map(({ char, color }) => <span aria-hidden="true" style={`color:${color}`}>{char}</span>)}<span class="wordmark-dot" aria-hidden="true">.</span>
 </span>
 <style>
-  .kubernautic-wordmark { display:inline-flex; align-items:baseline; white-space:nowrap; font-family:"Space Grotesk",sans-serif; font-weight:800; font-size:.88em; line-height:1; letter-spacing:-.055em; }
+  .kubernautic-wordmark { display:inline-flex; align-items:baseline; white-space:nowrap; font-family:"Space Grotesk",sans-serif; font-weight:800; font-size:.88em; line-height:1; letter-spacing:normal; gap:.11em; }
   .kubernautic-wordmark > span { display:inline-block; }
   .kubernautic-wordmark .wordmark-dot { color:#fff; margin-left:.055em; }
 </style>
