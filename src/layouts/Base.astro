@@ -1,7 +1,13 @@
 ---
 import '../styles/global.css';
-const { title = 'Kubernautic — Agentic AI for Kubernetes Operations', description = 'Meet the intelligent operations layer for Kubernetes. Observe, reason, recommend and govern with Kubernautic.' } = Astro.props;
+const {
+  title = 'Kubernautic | Agentic AI for Kubernetes Operations',
+  description = 'Explore Kubernautic: AI-assisted Kubernetes incident analysis, explainable recommendations, human governance, and an interactive operations demo.',
+  noindex = false
+} = Astro.props;
 const path = Astro.url.pathname;
+const canonical = new URL(path, 'https://kubernautic.com').toString();
+const siteUrl = 'https://kubernautic.com/';
 const nav = [
   {href:'/platform/',label:'Platform'},
   {href:'/agentic-ai/',label:'Agentic AI'},
@@ -9,20 +15,51 @@ const nav = [
   {href:'/open-source/',label:'Open Source'},
   {href:'/enterprise/',label:'Enterprise'}
 ];
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': siteUrl + '#website',
+      name: 'Kubernautic',
+      url: siteUrl,
+      inLanguage: 'en',
+      description: 'Agentic AI for Kubernetes operations, with explainable recommendations and human oversight.'
+    },
+    {
+      '@type': 'WebPage',
+      '@id': canonical + '#webpage',
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@id': siteUrl + '#website' }
+    }
+  ]
+};
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#070c17" />
-  <meta name="description" content={description}/>
+  <meta name="description" content={description} />
+  <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"} />
+  <meta name="color-scheme" content="dark" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="canonical" href={new URL(path, 'https://kubernautic.com').toString()} />
+  <link rel="canonical" href={canonical} />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kubernautic" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={new URL(path, 'https://kubernautic.com').toString()} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")} />
   <title>{title}</title>
 </head>
 <body>
