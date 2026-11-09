@@ -17,5 +17,6 @@
   <!-- White inset echoes the cube geometry of OpenKubes -->
   <path fill="#FFFFFF" d="M64 24.5 98.5 44.4v39.2L64 103.5 29.5 83.6V44.4Z"/>
   <path d="M29.5 44.4 23 40.6V23.9M98.5 44.4 116 34.3M29.5 83.6 10.5 94.6M64 103.5V121.5" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
-  <path fill="url(#letter)" d="M42 44.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v22.2l22.2-24.2h16.2a2 2 0 0 1 1.5 3.3L76.7 66.5l20.9 27a2 2 0 0 1-1.6 3.2H79.7L64.2 77.1 57 84.3v10.4a2 2 0 0 1-2 2H44a2 2 0 0 1-2-2Z"/>
+  <!-- Single continuous capital K with balanced strokes and no overlaps. -->
+  <path fill="url(#letter)" d="M43 45H57V61L72 45H85L65 67L85 89H72L57 73V89H43Z"/>
 </svg>
