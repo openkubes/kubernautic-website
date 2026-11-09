@@ -1,18 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Kubernautic hexagon signet</title>
-  <desc id="desc">Faceted OpenKubes-inspired hexagon with a clean K, using turquoise, blue, green and orange.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Kubernautic K in OpenKubes cube silhouette</title>
+  <desc id="desc">OpenKubes-inspired multicolor cube silhouette with a turquoise K in the central dark hexagon.</desc>
   <defs>
-    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00D3BA"/><stop offset="1" stop-color="#27A8F2"/></linearGradient>
-    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27A8F2"/><stop offset="1" stop-color="#1369CB"/></linearGradient>
-    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2DBF80"/><stop offset="1" stop-color="#00BBAE"/></linearGradient>
-    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFA52D"/><stop offset="1" stop-color="#F47B16"/></linearGradient>
+    <linearGradient id="crown" x1=".1" y1=".1" x2=".85" y2=".95"><stop stop-color="#27A8F2"/><stop offset="1" stop-color="#087FED"/></linearGradient>
+    <linearGradient id="lowerBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#287DE0"/><stop offset="1" stop-color="#1559B5"/></linearGradient>
+    <linearGradient id="green" x1=".15" y1="0" x2="1" y2="1"><stop stop-color="#42D98E"/><stop offset="1" stop-color="#158B4A"/></linearGradient>
+    <linearGradient id="rightOrange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFA52D"/><stop offset="1" stop-color="#E68E15"/></linearGradient>
+    <linearGradient id="lowerOrange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F47B16"/><stop offset="1" stop-color="#EB5414"/></linearGradient>
+    <linearGradient id="letterK" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6AF6E4"/><stop offset=".5" stop-color="#3DDFDE"/><stop offset="1" stop-color="#27A8F2"/></linearGradient>
   </defs>
-  <path d="M64 5 113 33.3 113 89.7 64 118 15 89.7 15 33.3Z" fill="#081725"/>
-  <path d="M64 5 113 33.3 113 49 96 59 96 43 64 24 32 43 32 59 15 49 15 33.3Z" fill="url(#teal)"/>
-  <path d="M113 49 113 89.7 64 118 64 99 96 80 96 59Z" fill="url(#blue)"/>
-  <path d="M15 49 32 59 32 80 64 99 64 118 15 89.7Z" fill="url(#green)"/>
-  <path d="M99 91 112 83.5 113 89.7 99 97.8Z" fill="url(#orange)"/>
-  <path d="M64 24 96 42.5 96 80.5 64 99 32 80.5 32 42.5Z" fill="#FFFFFF"/>
-  <path d="M64 5V24M113 49 96 59M15 49 32 59M64 99V118" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
-  <path d="M44 43H56V62L72 43H88L68 65 89 86H72L56 70V86H44Z" fill="url(#teal)"/>
+  <!-- Original OpenKubes cube-v2 outer face geometry and color values. -->
+  <path fill="url(#green)" d="M4 165 Q4 150 19 141 L123 66 V155 L77 180 V273 L4 304 Z"/>
+  <path fill="url(#crown)" d="M144 56 226 10 Q240 2 253 10 L463 121 383 164 241 92 144 143 Z"/>
+  <path fill="url(#rightOrange)" d="M403 182 478 142 V299 L403 269 Z"/>
+  <path fill="url(#lowerBlue)" d="M4 329 77 297 V342 L227 417 V503 Q223 508 217 504 L19 404 Q4 397 4 378 Z"/>
+  <path fill="url(#lowerOrange)" d="M255 418 403 343 V294 L478 327 V383 Q478 396 462 404 L266 505 Q255 511 255 497 Z"/>
+  <!-- Kubernautic center, distinct from OpenKubes cube faces. -->
+  <path fill="#081725" d="M240 127 382 199 382 327 240 398 99 327 99 205Z"/>
+  <path fill="none" stroke="#2CBCCA" stroke-width="5" opacity=".45" d="M240 141 367 207 367 317 240 382 114 317 114 213Z"/>
+  <path fill="url(#letterK)" d="M166 191H203V249L270 191H323L247 260 325 331H270L203 271V331H166Z"/>
 </svg>
