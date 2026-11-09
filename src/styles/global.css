@@ -907,6 +907,35 @@ h2 {
   flex: none;
   filter: drop-shadow(0 0 10px rgba(66, 216, 222, .16));
 }
+.ecosystem-wordmark {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 94px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  white-space: nowrap;
+  z-index: 3;
+  font: 700 24px/1.15 "Space Grotesk", sans-serif;
+  letter-spacing: -0.85px;
+  filter: drop-shadow(0 0 16px rgba(30, 142, 244, .12));
+}
+.ecosystem-wordmark > span:first-child {
+  /* OpenKubes brand spectrum: green > teal > blue > orange. */
+  background: linear-gradient(94deg,
+    #21b967 0%,
+    #168b80 22%,
+    #1266bc 49%,
+    #174fc3 70%,
+    #df7923 94%,
+    #f39a1e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ecosystem-wordmark-dot { color: #f39a1e; }
+
 .ecosystem-center small {
   font:
     7px "DM Mono",
