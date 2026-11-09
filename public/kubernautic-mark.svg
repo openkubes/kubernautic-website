@@ -1,22 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Kubernautic hexagon K signet</title>
-  <desc id="desc">A turquoise-to-cyan hexagon enclosing a white geometric field and a matching gradient letter K.</desc>
+  <title id="title">Kubernautic hexagon signet</title>
+  <desc id="desc">Turquoise K inside a dark navy hexagon with a glowing cyan outline.</desc>
   <defs>
-    <linearGradient id="hex" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#05D5B2"/>
-      <stop offset="0.52" stop-color="#00BCD6"/>
-      <stop offset="1" stop-color="#0B9FF4"/>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#21D2C9"/>
+      <stop offset="0.5" stop-color="#55E5E4"/>
+      <stop offset="1" stop-color="#20B9DB"/>
     </linearGradient>
-    <linearGradient id="letter" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#05CDA9"/>
-      <stop offset="1" stop-color="#079DF0"/>
+    <linearGradient id="k" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#65F0E5"/>
+      <stop offset="1" stop-color="#39D9E8"/>
     </linearGradient>
   </defs>
-  <!-- Rounded hexagonal body -->
-  <path fill="url(#hex)" d="M60.5 5.2a7 7 0 0 1 7 0l48.1 27.8a7 7 0 0 1 3.5 6.1v49.8a7 7 0 0 1-3.5 6.1l-48.1 27.8a7 7 0 0 1-7 0L12.4 95a7 7 0 0 1-3.5-6.1V39.1a7 7 0 0 1 3.5-6.1Z"/>
-  <!-- White inset echoes the cube geometry of OpenKubes -->
-  <path fill="#FFFFFF" d="M64 24.5 98.5 44.4v39.2L64 103.5 29.5 83.6V44.4Z"/>
-  <path d="M29.5 44.4 23 40.6V23.9M98.5 44.4 116 34.3M29.5 83.6 10.5 94.6M64 103.5V121.5" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
-  <!-- Single continuous capital K with balanced strokes and no overlaps. -->
-  <path fill="url(#letter)" d="M43 45H57V61L72 45H85L65 67L85 89H72L57 73V89H43Z"/>
+  <path d="M64 5 115.5 34.75V93.25L64 123 12.5 93.25V34.75Z" fill="#081725" stroke="url(#edge)" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M64 15.5 106.5 40v48L64 112.5 21.5 88V40Z" fill="none" stroke="#1B8193" stroke-width="1.7" opacity="0.8"/>
+  <!-- One-piece geometric K: even stem and open, clearly separated diagonals. -->
+  <path d="M38 38H53V57L75 38H96L68 63.5 97 90H75L53 70V90H38Z" fill="url(#k)"/>
 </svg>
