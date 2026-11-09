@@ -900,6 +900,13 @@ h2 {
 .ecosystem-center span {
   color: #77e5ee;
 }
+.ecosystem-logo {
+  display: block;
+  width: 96px;
+  height: 96px;
+  flex: none;
+  filter: drop-shadow(0 0 10px rgba(66, 216, 222, .16));
+}
 .ecosystem-center small {
   font:
     7px "DM Mono",
