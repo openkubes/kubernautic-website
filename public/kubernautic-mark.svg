@@ -1,19 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Kubernautic hexagon signet</title>
-  <desc id="desc">Turquoise K inside a dark navy hexagon with a glowing cyan outline.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Kubernautic – OpenKubes palette hexagon</title>
+  <desc id="desc">Geometric K inside a three-dimensional hexagon combining OpenKubes green, blue and orange with turquoise accents.</desc>
   <defs>
-    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#21D2C9"/>
-      <stop offset="0.5" stop-color="#55E5E4"/>
-      <stop offset="1" stop-color="#20B9DB"/>
+    <linearGradient id="outer" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2DBF80"/>
+      <stop offset=".42" stop-color="#27A8F2"/>
+      <stop offset=".68" stop-color="#12BCE2"/>
+      <stop offset="1" stop-color="#F47B16"/>
     </linearGradient>
-    <linearGradient id="k" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#65F0E5"/>
-      <stop offset="1" stop-color="#39D9E8"/>
+    <linearGradient id="letter" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2DBF80"/>
+      <stop offset=".55" stop-color="#27A8F2"/>
+      <stop offset="1" stop-color="#2E75CF"/>
     </linearGradient>
   </defs>
-  <path d="M64 5 115.5 34.75V93.25L64 123 12.5 93.25V34.75Z" fill="#081725" stroke="url(#edge)" stroke-width="5" stroke-linejoin="round"/>
-  <path d="M64 15.5 106.5 40v48L64 112.5 21.5 88V40Z" fill="none" stroke="#1B8193" stroke-width="1.7" opacity="0.8"/>
-  <!-- One-piece geometric K: even stem and open, clearly separated diagonals. -->
-  <path d="M38 38H53V57L75 38H96L68 63.5 97 90H75L53 70V90H38Z" fill="url(#k)"/>
+  <!-- Outer silhouette with six rounded corners and multi-color identity -->
+  <path d="M118 13 Q128 7 138 13 L226 64 Q236 70 236 82 V174 Q236 186 226 192 L138 243 Q128 249 118 243 L30 192 Q20 186 20 174 V82 Q20 70 30 64Z" fill="url(#outer)"/>
+  <!-- Deliberate OpenKubes orange and green faces for a recognizable small logo -->
+  <path d="M128 244 226 188 Q236 182 236 173 V113 L210 130 V174 L128 221Z" fill="#F47B16" opacity=".97"/>
+  <path d="M20 82 Q20 70 30 64 L67 42 V78 L46 91 V165 L20 181Z" fill="#2DBF80" opacity=".96"/>
+  <!-- Inner white cuboid field: preserves recognizable original hexagon concept -->
+  <path d="M128 51 198 91 V169 L128 210 58 169 V91Z" fill="#FFFFFF"/>
+  <!-- Three short white seams create a clean isometric hexagonal-cube identity -->
+  <path d="M58 91 32 75 M198 91 223 77 M58 169 32 183 M128 210 V237" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+  <!-- A single solid, balanced capital K with ample breathing room -->
+  <path d="M88 83 H109 V119 L145 83 H175 L132 126 L177 176 H146 L109 137 V176 H88Z" fill="url(#letter)"/>
 </svg>
