@@ -922,12 +922,19 @@ h2 {
   filter: drop-shadow(0 0 16px rgba(30, 142, 244, .12));
 }
 .ecosystem-wordmark > span:first-child {
-  background: linear-gradient(96deg, #38bbef 5%, #178cf0 56%, #2b70e6 100%);
+  /* OpenKubes brand spectrum: green > teal > blue > orange. */
+  background: linear-gradient(94deg,
+    #21b967 0%,
+    #168b80 22%,
+    #1266bc 49%,
+    #174fc3 70%,
+    #df7923 94%,
+    #f39a1e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.ecosystem-wordmark-dot { color: #ff9b22; }
+.ecosystem-wordmark-dot { color: #f39a1e; }
 
 .ecosystem-center small {
   font:
