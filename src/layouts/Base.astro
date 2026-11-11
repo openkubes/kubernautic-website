@@ -32,7 +32,7 @@ const structuredData = {
       name: 'Kubernautic',
       url: siteUrl,
       inLanguage: locale,
-      description: 'Agentic AI for Kubernetes operations, with explainable recommendations and human oversight.'
+      description: isDe ? 'Agentic AI für Kubernetes Operations mit nachvollziehbaren Empfehlungen und menschlicher Kontrolle.' : 'Agentic AI for Kubernetes operations, with explainable recommendations and human oversight.'
     },
     {
       '@type': 'WebPage',
@@ -40,7 +40,7 @@ const structuredData = {
       url: canonical,
       name: title,
       description,
-      inLanguage: 'en',
+      inLanguage: locale,
       isPartOf: { '@id': siteUrl + '#website' }
     }
   ]
@@ -72,12 +72,12 @@ const structuredData = {
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Kubernautic — Agentic AI for Kubernetes Operations. Observe. Reason. Recommend. Govern." />
+  <meta property="og:image:alt" content={isDe ? "Kubernautic — Agentic AI für Kubernetes Operations. Beobachten. Analysieren. Empfehlen. Steuern." : "Kubernautic — Agentic AI for Kubernetes Operations. Observe. Reason. Recommend. Govern."} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content="https://kubernautic.com/og/kubernautic-og.png" />
-  <meta name="twitter:image:alt" content="Kubernautic — Agentic AI for Kubernetes Operations." />
+  <meta name="twitter:image:alt" content={isDe ? "Kubernautic — Agentic AI für Kubernetes Operations." : "Kubernautic — Agentic AI for Kubernetes Operations."} />
   <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")} />
   <title>{title}</title>
 </head>
@@ -86,16 +86,16 @@ const structuredData = {
   <header class="site-header">
     <div class="shell nav-wrap">
       <a class="brand" href={localized('/')} aria-label={isDe ? 'Kubernautic Startseite' : 'Kubernautic Home'}><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a>
-      <nav class="desktop-nav" aria-label="Primary navigation">
+      <nav class="desktop-nav" aria-label={isDe ? "Hauptnavigation" : "Primary navigation"}>
         {nav.map(item => <a class:list={['nav-link', {'active':path===item.href}]} href={item.href}>{item.label}</a>)}
       </nav>
-      <div class="nav-actions"><a class="locale-switch" href={alternatePath} lang={isDe ? 'en' : 'de'} hreflang={isDe ? 'en' : 'de'} aria-label={isDe ? 'Switch to English' : 'Zur deutschen Version wechseln'}>{isDe ? 'EN' : 'DE'}</a><a class="nav-demo" href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'} <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button></div>
+      <div class="nav-actions"><a class="locale-switch" href={alternatePath} lang={isDe ? 'en' : 'de'} hreflang={isDe ? 'en' : 'de'} aria-label={isDe ? 'Switch to English' : 'Zur deutschen Version wechseln'}>{isDe ? 'EN' : 'DE'}</a><a class="nav-demo" href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'} <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-label={isDe ? "Navigation öffnen oder schließen" : "Toggle navigation"} aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button></div>
     </div>
     <nav id="mobile-nav" class="mobile-nav" aria-label={isDe ? 'Mobile Navigation' : 'Mobile navigation'} hidden>{nav.map(item => <a href={item.href}>{item.label}</a>)}<a href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'}</a><a href={alternatePath}>{isDe ? 'English' : 'Deutsch'}</a></nav>
   </header>
   <main><slot /></main>
   <footer class="footer">
-    <div class="shell footer-grid"><div><a class="brand" href={localized('/')}><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a><p>{isDe ? 'Intelligenz für Cloud-native Operations.' : 'Intelligence for cloud-native operations.'}<br/>{isDe ? 'Auf offenen Grundlagen aufgebaut.' : 'Built on open foundations.'}</p></div><div class="footer-col"><strong>{isDe ? 'Entdecken' : 'Explore'}</strong><a href={localized('/platform/')}>{isDe ? 'Plattform' : 'Platform'}</a><a href={localized('/agentic-ai/')}>Agentic AI</a><a href={localized('/architecture/')}>{isDe ? 'Architektur' : 'Architecture'}</a></div><div class="footer-col"><strong>{isDe ? 'Kontakt' : 'Connect'}</strong><a href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'}</a><a href={localized('/enterprise/')}>Enterprise</a><a href={localized('/contact/')}>{isDe ? 'Kontakt' : 'Contact'}</a></div><div class="footer-col"><strong>Ecosystem</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={localized('/open-source/')}>Open Source</a></div></div>
+    <div class="shell footer-grid"><div><a class="brand" href={localized('/')}><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a><p>{isDe ? 'Intelligenz für Cloud-native Operations.' : 'Intelligence for cloud-native operations.'}<br/>{isDe ? 'Auf offenen Grundlagen aufgebaut.' : 'Built on open foundations.'}</p></div><div class="footer-col"><strong>{isDe ? 'Entdecken' : 'Explore'}</strong><a href={localized('/platform/')}>{isDe ? 'Plattform' : 'Platform'}</a><a href={localized('/agentic-ai/')}>Agentic AI</a><a href={localized('/architecture/')}>{isDe ? 'Architektur' : 'Architecture'}</a></div><div class="footer-col"><strong>{isDe ? 'Kontakt' : 'Connect'}</strong><a href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'}</a><a href={localized('/enterprise/')}>Enterprise</a><a href={localized('/contact/')}>{isDe ? 'Kontakt' : 'Contact'}</a></div><div class="footer-col"><strong>{isDe ? "Ökosystem" : "Ecosystem"}</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={localized('/open-source/')}>Open Source</a></div></div>
     <div class="shell footer-bottom"><span>© {new Date().getFullYear()} Kubernautic. {isDe ? 'Ein Konzept im OpenKubes-Ökosystem.' : 'A concept in the OpenKubes ecosystem.'}</span><span>{isDe ? 'Offene Systeme. Menschliche Kontrolle.' : 'Open systems. Human control.'}</span></div>
   </footer>
   <script>
