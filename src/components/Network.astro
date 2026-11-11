@@ -1,4 +1,7 @@
-<div class="network-scene" aria-label="Abstract visualization showing AI agents connected to Kubernetes clusters" role="img">
+---
+const isDe = Astro.url.pathname === '/de/' || Astro.url.pathname.startsWith('/de/');
+---
+<div class="network-scene" aria-label={isDe ? "Abstrakte Visualisierung von KI-Agenten und Kubernetes-Clustern" : "Abstract visualization showing AI agents connected to Kubernetes clusters"} role="img">
   <div class="scene-orbit orbit-one"></div><div class="scene-orbit orbit-two"></div><div class="scene-orbit orbit-three"></div>
   <svg class="network-wires" viewBox="0 0 800 650" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
     <defs><linearGradient id="wire" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#42dce5" stop-opacity=".14"/><stop offset=".5" stop-color="#60e6ef" stop-opacity=".65"/><stop offset="1" stop-color="#a58cff" stop-opacity=".12"/></linearGradient></defs>
@@ -6,11 +9,11 @@
     <path d="M170 170 L635 150 L680 400 L510 560 L250 520 L120 380 Z" fill="none" stroke="#7bbad4" stroke-opacity=".12"/>
     <circle cx="170" cy="170" r="3" fill="#60e6ef"/><circle cx="635" cy="150" r="3" fill="#60e6ef"/><circle cx="680" cy="400" r="3" fill="#a58cff"/><circle cx="250" cy="520" r="3" fill="#60e6ef"/>
   </svg>
-  <div class="core-halo"><div class="core-inner"><div class="core-glyph">⌘</div><span>AGENTIC CORE</span></div></div>
-  <div class="scene-node node-observe"><span class="node-icon">◉</span><div><strong>Observe</strong><small>Signals &amp; events</small></div><i class="status-dot"></i></div>
-  <div class="scene-node node-reason"><span class="node-icon violet">✳</span><div><strong>Reason</strong><small>Context &amp; analysis</small></div><i class="status-dot"></i></div>
-  <div class="scene-node node-policy"><span class="node-icon">◇</span><div><strong>Govern</strong><small>Policies &amp; approval</small></div><i class="status-dot"></i></div>
-  <div class="scene-node node-k8s"><span class="node-icon">⬡</span><div><strong>Kubernetes</strong><small>Connected clusters</small></div><i class="status-dot"></i></div>
-  <div class="scene-tag tag-one"><span class="ping"></span> ALL SYSTEMS OBSERVED</div><div class="scene-tag tag-two">HUMAN IN CONTROL <span>✓</span></div>
-  <div class="scene-caption">INTELLIGENT OPERATIONS FABRIC <span> / </span> 001</div>
+  <div class="core-halo"><div class="core-inner"><div class="core-glyph">⌘</div><span>{isDe ? 'AGENTIC-KERN' : 'AGENTIC CORE'}</span></div></div>
+  <div class="scene-node node-observe"><span class="node-icon">◉</span><div><strong>Observe</strong><small>{isDe ? 'Signale & Ereignisse' : 'Signals & events'}</small></div><i class="status-dot"></i></div>
+  <div class="scene-node node-reason"><span class="node-icon violet">✳</span><div><strong>Reason</strong><small>{isDe ? 'Kontext & Analyse' : 'Context & analysis'}</small></div><i class="status-dot"></i></div>
+  <div class="scene-node node-policy"><span class="node-icon">◇</span><div><strong>Govern</strong><small>{isDe ? 'Richtlinien & Freigabe' : 'Policies & approval'}</small></div><i class="status-dot"></i></div>
+  <div class="scene-node node-k8s"><span class="node-icon">⬡</span><div><strong>Kubernetes</strong><small>{isDe ? 'Verbundene Cluster' : 'Connected clusters'}</small></div><i class="status-dot"></i></div>
+  <div class="scene-tag tag-one"><span class="ping"></span> {isDe ? 'ALLE SYSTEME IM BLICK' : 'ALL SYSTEMS OBSERVED'}</div><div class="scene-tag tag-two">{isDe ? 'MENSCHEN ENTSCHEIDEN' : 'HUMAN IN CONTROL'} <span>✓</span></div>
+  <div class="scene-caption">{isDe ? 'INTELLIGENTE OPERATIONS-PLATTFORM' : 'INTELLIGENT OPERATIONS FABRIC'} <span> / </span> 001</div>
 </div>

@@ -1,0 +1,103 @@
+---
+const stages = [
+  { id: 'signals', number: '01', label: 'Signale', subtitle: 'Autorisierte Daten beobachten', icon: '◎', heading: 'Mit Belegen beginnen, nicht mit Annahmen.', description: 'Kubernetes-Events, Workload-Zustand, Metriken und Logs im Rahmen der erteilten Berechtigungen auslesen.', detail: 'Namespace-Grenzen und Datenzugriff werden vor der Analyse durchgesetzt.', tags: ['Kubernetes API', 'Events', 'Metriken', 'Logs'] },
+  { id: 'context', number: '02', label: 'Kontext', subtitle: 'Zusammengehörige Belege verknüpfen', icon: '⌁', heading: 'Symptome mit Änderungen verbinden.', description: 'Zeitpunkte, Workload-Topologie, letzte Deployments und Betriebskontext korrelieren, um den Incident nachvollziehbar einzuordnen.', detail: 'Korrelation begründet eine Hypothese, keinen Beweis. Operators können die Ursprungsdaten prüfen.', tags: ['Workloads', 'Topologie', 'Änderungen', 'Zeitachse'] },
+  { id: 'reason', number: '03', label: 'Analysieren', subtitle: 'Mögliche Ursachen erklären', icon: '✳', heading: 'Analysen nachvollziehbar machen.', description: 'KI-gestützte Analysen leiten aus Kontext mögliche Ursachen und nachvollziehbare Handlungsschritte ab und machen Unsicherheiten sichtbar.', detail: 'In der geplanten öffentlichen Vorschau sind Empfehlungen unverbindlich. Autonome Schreibzugriffe stehen nicht zur Verfügung.', tags: ['Analyse', 'Hypothesen', 'Belege', 'Empfehlungen'] },
+  { id: 'govern', number: '04', label: 'Steuern', subtitle: 'Menschen entscheiden', icon: '◇', heading: 'Erst Richtlinien, dann Aktionen.', description: 'Zugriffsregeln, Freigabewege und Auditierbarkeit definieren die Grenze zwischen Assistenz und autorisierten Aktionen.', detail: 'Read-only-Demozugriff bedeutet: keine Kubernetes-Änderungen und keine ausgeführte Remediation.', tags: ['RBAC', 'Richtlinien', 'Freigaben', 'Audit'] },
+  { id: 'console', number: '05', label: 'Console', subtitle: 'Nächste Schritte verstehen', icon: '▣', heading: 'Eine übersichtliche Operations-Erfahrung.', description: 'Incident-Zeitachse, Belege und empfohlene nächste Schritte in einer verständlichen Oberfläche vereinen.', detail: 'Die registrierte Console-Vorschau ist geplant. Dieses Diagramm zeigt den vorgesehenen Architekturablauf.', tags: ['Incident-Ansicht', 'Belege', 'Menschliche Kontrolle', 'Read-only-Vorschau'] }
+];
+---
+<section class="architecture-explorer" aria-labelledby="architecture-explorer-title">
+  <div class="architecture-explorer-head">
+    <div>
+      <span class="eyebrow">INTERAKTIVE ARCHITEKTUR / KONZEPTVORSCHAU</span>
+      <h2 id="architecture-explorer-title">Entdecken Sie den <em>Intelligenzfluss.</em></h2>
+      <p>Wählen Sie eine Ebene, um nachzuvollziehen, wie aus Signalen überprüfbare, kontrollierte Empfehlungen entstehen.</p>
+    </div>
+    <span class="architecture-demo-tag">ARCHITEKTURKONZEPT · KEINE LIVE-DATEN</span>
+  </div>
+  <div class="architecture-explorer-layout">
+    <div class="architecture-stages" role="group" aria-label="Architekturebenen">
+      {stages.map((stage, index) => (
+        <div class="architecture-stage-wrap">
+          <button type="button" class:list={['architecture-stage', { 'is-active': index === 0 }]} data-stage={stage.id} aria-pressed={index === 0 ? 'true' : 'false'} aria-controls="architecture-detail">
+            <span class="architecture-stage-icon" aria-hidden="true">{stage.icon}</span>
+            <span class="architecture-stage-copy"><small>{stage.number} / {stage.label.toUpperCase()}</small><strong>{stage.subtitle}</strong></span>
+            <span class="architecture-stage-arrow" aria-hidden="true">↗</span>
+          </button>
+          {index < stages.length - 1 && <div class="architecture-connector" aria-hidden="true"><span>↓</span></div>}
+        </div>
+      ))}
+    </div>
+    <div class="architecture-detail" id="architecture-detail" aria-live="polite" aria-atomic="true">
+      <span class="architecture-detail-kicker" id="architecture-detail-kicker">01 / SIGNALS</span>
+      <div class="architecture-detail-orbit" aria-hidden="true"><span id="architecture-detail-icon">◎</span></div>
+      <h3 id="architecture-detail-heading">{stages[0].heading}</h3>
+      <p id="architecture-detail-description">{stages[0].description}</p>
+      <div class="architecture-tags" id="architecture-detail-tags">{stages[0].tags.map(tag => <span>{tag}</span>)}</div>
+      <div class="architecture-boundary"><span>◆ BETRIEBLICHE GRENZE</span><p id="architecture-detail-boundary">{stages[0].detail}</p></div>
+    </div>
+  </div>
+  <p class="architecture-footnote">Die Architektur dient der Veranschaulichung. Funktionen und Integrationen müssen implementiert und sicherheitstechnisch geprüft werden. Die geplante registrierte Demo ist Read-only.</p>
+</section>
+<script>
+  const stages = [{"id":"signals","number":"01","label":"Signale","icon":"◎","heading":"Mit Belegen beginnen, nicht mit Annahmen.","description":"Kubernetes-Events, Workload-Zustand, Metriken und Logs im Rahmen der erteilten Berechtigungen auslesen.","detail":"Namespace-Grenzen und Datenzugriff werden vor der Analyse durchgesetzt.","tags":["Kubernetes API","Events","Metriken","Logs"]},{"id":"context","number":"02","label":"Kontext","icon":"⌁","heading":"Symptome mit Änderungen verbinden.","description":"Zeitpunkte, Workload-Topologie, letzte Deployments und Betriebskontext korrelieren, um den Incident nachvollziehbar einzuordnen.","detail":"Korrelation begründet eine Hypothese, keinen Beweis. Operators können die Ursprungsdaten prüfen.","tags":["Workloads","Topologie","Änderungen","Zeitachse"]},{"id":"reason","number":"03","label":"Analysieren","icon":"✳","heading":"Analysen nachvollziehbar machen.","description":"KI-gestützte Analysen leiten aus Kontext mögliche Ursachen und nachvollziehbare Handlungsschritte ab und machen Unsicherheiten sichtbar.","detail":"In der geplanten öffentlichen Vorschau sind Empfehlungen unverbindlich. Autonome Schreibzugriffe stehen nicht zur Verfügung.","tags":["Analyse","Hypothesen","Belege","Empfehlungen"]},{"id":"govern","number":"04","label":"Steuern","icon":"◇","heading":"Erst Richtlinien, dann Aktionen.","description":"Zugriffsregeln, Freigabewege und Auditierbarkeit definieren die Grenze zwischen Assistenz und autorisierten Aktionen.","detail":"Read-only-Demozugriff bedeutet: keine Kubernetes-Änderungen und keine ausgeführte Remediation.","tags":["RBAC","Richtlinien","Freigaben","Audit"]},{"id":"console","number":"05","label":"Console","icon":"▣","heading":"Eine übersichtliche Operations-Erfahrung.","description":"Incident-Zeitachse, Belege und empfohlene nächste Schritte in einer verständlichen Oberfläche vereinen.","detail":"Die registrierte Console-Vorschau ist geplant. Dieses Diagramm zeigt den vorgesehenen Architekturablauf.","tags":["Incident-Ansicht","Belege","Menschliche Kontrolle","Read-only-Vorschau"]}];
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.architecture-stage');
+  buttons.forEach(button => button.addEventListener('click', () => {
+    const stage = stages.find(item => item.id === button.dataset.stage);
+    if (!stage) return;
+    buttons.forEach(item => {
+      const selected = item === button;
+      item.classList.toggle('is-active', selected);
+      item.setAttribute('aria-pressed', String(selected));
+    });
+    const assign = (id: string, value: string) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+    assign('architecture-detail-kicker', stage.number + ' / ' + stage.label.toUpperCase());
+    assign('architecture-detail-icon', stage.icon);
+    assign('architecture-detail-heading', stage.heading);
+    assign('architecture-detail-description', stage.description);
+    assign('architecture-detail-boundary', stage.detail);
+    const tags = document.getElementById('architecture-detail-tags');
+    if (tags) {
+      tags.replaceChildren(...stage.tags.map(tag => {
+        const span = document.createElement('span');
+        span.textContent = tag;
+        return span;
+      }));
+    }
+  }));
+</script>
+<style>
+  .architecture-explorer { margin: 0 auto 38px; padding: 30px; border: 1px solid #284054; border-radius: 20px; background: radial-gradient(ellipse at 70% 22%, rgba(34,103,114,.17), transparent 65%), #091321; }
+  .architecture-explorer-head { display: flex; justify-content: space-between; gap: 28px; align-items: flex-start; margin-bottom: 30px; }
+  .architecture-explorer-head h2 { margin: 15px 0; font-size: clamp(30px, 4vw, 46px); letter-spacing: -1.5px; }
+  .architecture-explorer-head h2 em { color: #7ceff3; font-style: normal; }
+  .architecture-explorer-head p { max-width: 640px; color: #b1c4d3; }
+  .architecture-demo-tag { flex-shrink: 0; padding: 9px 12px; border: 1px solid #32576a; border-radius: 6px; color: #7ceff3; font: 10px "DM Mono", monospace; letter-spacing: .6px; }
+  .architecture-explorer-layout { display: grid; grid-template-columns: minmax(280px, .9fr) minmax(0, 1.1fr); gap: 24px; }
+  .architecture-stages { display: flex; flex-direction: column; }
+  .architecture-stage { display: flex; width: 100%; align-items: center; gap: 16px; border: 1px solid #263d51; background: #0d1a2a; color: #eaf1fc; border-radius: 11px; padding: 16px; text-align: left; cursor: pointer; transition: border-color .2s ease, background .2s ease; }
+  .architecture-stage:hover, .architecture-stage:focus-visible { border-color: #7ceff3; outline-offset: 3px; }
+  .architecture-stage.is-active { border-color: #65d9e4; background: #112c38; box-shadow: inset 3px 0 #7ceff3; }
+  .architecture-stage-icon { display: grid; place-items: center; width: 43px; height: 43px; flex-shrink: 0; border-radius: 9px; background: #193545; color: #7ceff3; font-size: 24px; }
+  .architecture-stage-copy { display: flex; flex: 1; flex-direction: column; gap: 6px; }
+  .architecture-stage-copy small { font: 10px "DM Mono",monospace; color: #7ceff3; letter-spacing: 1px; }
+  .architecture-stage-copy strong { font-size: 15px; font-weight: 600; }
+  .architecture-stage-arrow { color: #7ceff3; font-size: 20px; }
+  .architecture-connector { height: 25px; display: grid; place-items: center; color: #437a87; font-size: 17px; }
+  .architecture-detail { display: flex; flex-direction: column; align-items: flex-start; padding: 32px; border: 1px solid #244658; border-radius: 15px; background: linear-gradient(135deg, #102637, #0b1626 70%); }
+  .architecture-detail-kicker { font: 11px "DM Mono", monospace; letter-spacing: 1.2px; color: #7ceff3; }
+  .architecture-detail-orbit { display: grid; place-items: center; width: 110px; height: 110px; margin: 30px auto 22px; align-self: center; border-radius: 50%; border: 1px solid #408d9d; background: radial-gradient(circle, #155b67 0%, #0b2433 65%); box-shadow: 0 0 55px #30d6da22, inset 0 0 30px #46e7e622; }
+  .architecture-detail-orbit span { font-size: 58px; color: #94f3ef; }
+  .architecture-detail h3 { margin: 12px 0; font-size: clamp(24px,3vw,32px); letter-spacing: -.7px; }
+  .architecture-detail > p { line-height: 1.7; color: #c1cfdd; margin: 0 0 25px; }
+  .architecture-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 26px; }
+  .architecture-tags span { padding: 7px 9px; font: 11px "DM Mono",monospace; color: #9feaf0; border: 1px solid #315264; border-radius: 5px; }
+  .architecture-boundary { margin-top: auto; width: 100%; border-top: 1px solid #294352; padding-top: 21px; }
+  .architecture-boundary span { color: #7ceff3; font: 10px "DM Mono", monospace; letter-spacing: 1px; }
+  .architecture-boundary p { line-height: 1.6; color: #a9becd; font-size: 13px; }
+  .architecture-footnote { margin: 18px 0 0; font-size: 12px; line-height: 1.5; color: #97aabb; }
+  @media (max-width: 900px) { .architecture-explorer-head { flex-direction: column; } .architecture-explorer-layout { grid-template-columns: 1fr; } }
+  @media (max-width: 620px) { .architecture-explorer { padding: 18px; } .architecture-detail { padding: 22px; } .architecture-stage { padding: 12px; } }
+  @media (prefers-reduced-motion: reduce) { .architecture-stage { transition: none; } }
+</style>

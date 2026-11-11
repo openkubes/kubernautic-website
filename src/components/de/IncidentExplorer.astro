@@ -1,0 +1,188 @@
+---
+const steps = [
+  {
+    id: 'observe', index: '01', label: 'Beobachten', sub: 'Symptom erkennen',
+    eyebrow: 'KUBERNETES / EREIGNISSE', heading: 'Ein Workload startet immer wieder neu.',
+    summary: 'Der Pod payment-api scheitert wiederholt beim Start. Kubernetes meldet CrashLoopBackOff, doch dieser Status erklärt nicht die eigentliche Ursache.',
+    evidenceTitle: 'Beispielhafte kubectl-Belege',
+    evidence: '$ kubectl get pods -n demo-app\npayment-api-7d9f    0/1    CrashLoopBackOff    6    8m\n\n$ kubectl describe pod payment-api-7d9f -n demo-app\nWarning  BackOff  Back-off restarting failed container',
+    insightTitle: 'Worauf es ankommt', insight: 'Den Neustart als Symptom betrachten. Exit-Grund des Containers, aktuelle Events und Anwendungslogs prüfen, bevor eine Hypothese aufgestellt wird.',
+    boundary: 'Keine Live-Cluster-Verbindung. Alle Ereignisse sind synthetisch.'
+  },
+  {
+    id: 'correlate', index: '02', label: 'Korrelieren', sub: 'Belege zusammenführen',
+    eyebrow: 'BETRIEBLICHER KONTEXT', heading: 'Dem Fehler ging eine Konfigurationsänderung voraus.',
+    summary: 'Die Zeitachse verbindet den ersten Neustart mit einem Deployment-Update. Vor dem Rollout der neuen Konfiguration war der Workload gesund.',
+    evidenceTitle: 'Synthetische Incident-Zeitachse',
+    evidence: '09:41  Deployment-Rollout gestartet: payment-api Revision 18\n09:42  ConfigMap payment-api-config aktualisiert\n09:43  Container beendet sich beim Start (Exit-Code 1)\n09:44  Wiederholte Neustarts; BackOff-Events nehmen zu',
+    insightTitle: 'Korrelierend signals', insight: 'Der zeitliche Zusammenhang macht die Konfigurationsänderung zu einem wichtigen Prüfpunkt. Zeitliche Korrelation allein beweist keine Ursache.',
+    boundary: 'Die Zeitachse dient nur zur Illustration und enthält keine Produktivtelemetrie.'
+  },
+  {
+    id: 'reason', index: '03', label: 'Analysieren', sub: 'Hypothese prüfen',
+    eyebrow: 'KI-GESTÜTZTE UNTERSUCHUNG', heading: 'Eine fehlende Einstellung ist die wahrscheinliche Ursache.',
+    summary: 'Synthetische Anwendungslogs zeigen, dass nach dem Rollout eine erforderliche Umgebungsvariable fehlt. Die Belege stützen eine Konfigurationshypothese.',
+    evidenceTitle: 'Synthetische Anwendungslogs',
+    evidence: '2026-11-06T09:43:12Z INFO  Starte payment-api\n2026-11-06T09:43:12Z ERROR Erforderliche Konfiguration fehlt: PAYMENT_PROVIDER_URL\n2026-11-06T09:43:12Z FATAL Startvalidierung fehlgeschlagen',
+    insightTitle: 'Nachvollziehbare Analyse', insight: 'Wahrscheinliche Ursache: Die aktuelle Workload-Konfiguration stellt PAYMENT_PROVIDER_URL nicht bereit. Vor einer Aktion mit dem Deployment-Manifest und der vorherigen Revision abgleichen.',
+    boundary: 'Dies ist eine vorgegebene Analyse, kein Live-KI-Modell und keine verifizierte Diagnose.'
+  },
+  {
+    id: 'recommend', index: '04', label: 'Empfehlen', sub: 'Sichere Maßnahmen planen',
+    eyebrow: 'EMPFOHLENE ABHILFE', heading: 'Prüfen, korrigieren und validieren.',
+    summary: 'Statt eines undurchsichtigen Ein-Klick-Fixes erhalten Operators eine vorgeschlagene Abfolge von Prüfungen und Maßnahmen.',
+    evidenceTitle: 'Beispielhafter Maßnahmenplan',
+    evidence: '1. Deployment-Variablen und ConfigMap-Verweise prüfen\n2. Mit der letzten funktionierenden Revision vergleichen\n3. Fehlende Einstellung per GitOps-Review wiederherstellen\n4. Rollout-Bereitschaft und Anwendungszustand überwachen\n5. Belege und Ergebnis in der Incident-Historie dokumentieren',
+    insightTitle: 'Empfehlung', insight: 'Eine geprüfte GitOps-Änderung mit anschließender Validierung ist Ad-hoc-Eingriffen vorzuziehen. In dieser Demo werden keine Änderungen ausgeführt.',
+    boundary: 'Nur eine Empfehlung. Keine Schreibrechte und keine ausführbaren Aktionen.'
+  },
+  {
+    id: 'govern', index: '05', label: 'Steuern', sub: 'Menschen behalten die Kontrolle',
+    eyebrow: 'RICHTLINIEN / MENSCHLICHE FREIGABE', heading: 'Menschen autorisieren die Änderung.',
+    summary: 'Ein produktiver Ablauf würde Umfang, Richtlinien und Freigaben vor jeder zulässigen Remediation prüfen. In dieser Demo bleibt die Ausführung gesperrt.',
+    evidenceTitle: 'Simulierte Richtlinienprüfung',
+    evidence: 'Richtlinie: change-approval-required\nRessource: deployment/payment-api\nNamespace:  demo-app\nRisiko:     Anwendungskonfiguration geändert\nFreigabe:   NICHT ANGEFRAGT (DEMO)\nAusführung: DEAKTIVIERT',
+    insightTitle: 'Governance-Grenze', insight: 'Diese Demo endet bewusst bei der Empfehlung. Eine produktive Lösung erfordert eine separat geprüfte Autorisierung und einen Audit-Trail.',
+    boundary: 'Read-only-Demo ohne Freigabeanforderungen oder ausgeführte Maßnahmen.'
+  }
+];
+---
+<div class="incident-explorer" data-incident-explorer>
+  <div class="incident-toolbar">
+    <div class="incident-brand"><span class="incident-diamond">◇</span><span>kubernautic <span class="incident-slash">/</span> Incident-Explorer</span></div>
+    <span class="incident-simulation">● SIMULIERTE DATEN · READ-ONLY</span>
+  </div>
+  <div class="incident-intro">
+    <div>
+      <span class="eyebrow">GEFÜHRTE DEMO / SZENARIO 001</span>
+      <h2>Untersuchen Sie einen <em>CrashLoopBackOff.</em></h2>
+      <p>Folgen Sie den Belegen durch einen fünfstufigen Incident-Ablauf mit menschlicher Kontrolle.</p>
+    </div>
+    <div class="incident-status"><span>DEMO-WORKLOAD</span><strong>payment-api</strong><small>namespace: demo-app</small></div>
+  </div>
+  <div class="incident-steps" role="group" aria-label="Schritte der Incident-Analyse">
+    {steps.map((step, i) => (
+      <button type="button" class:list={['incident-step', { 'is-active': i === 0 }]} data-incident-step={step.id} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls="incident-detail">
+        <span class="incident-step-index">{step.index}</span>
+        <span class="incident-step-text"><strong>{step.label}</strong><small>{step.sub}</small></span>
+      </button>
+    ))}
+  </div>
+  <div class="incident-detail" id="incident-detail" aria-live="polite" aria-atomic="true">
+    <div class="incident-detail-copy">
+      <span class="incident-kicker" id="incident-kicker">01 / KUBERNETES / EREIGNISSE</span>
+      <h3 id="incident-heading">{steps[0].heading}</h3>
+      <p id="incident-summary">{steps[0].summary}</p>
+      <div class="incident-insight">
+        <div class="incident-insight-label">✳ <span id="incident-insight-title">{steps[0].insightTitle}</span></div>
+        <p id="incident-insight-copy">{steps[0].insight}</p>
+      </div>
+      <div class="incident-governance">
+        <span>◇ SICHERHEITSGRENZE</span>
+        <p id="incident-boundary">{steps[0].boundary}</p>
+      </div>
+    </div>
+    <div class="incident-evidence">
+      <div class="incident-evidence-head"><span id="incident-evidence-title">{steps[0].evidenceTitle}</span><span>NUR EIN BEISPIEL</span></div>
+      <pre><code id="incident-evidence-code">{steps[0].evidence}</code></pre>
+      <div class="incident-evidence-foot"><span class="incident-live-dot"></span> Synthetischer Incident · Kein Cluster verbunden</div>
+    </div>
+  </div>
+  <div class="incident-controls">
+    <span id="incident-progress-label">SCHRITT 1 VON 5</span>
+    <div>
+      <button type="button" class="incident-nav-button" id="incident-back" disabled>← Zurück</button>
+      <button type="button" class="incident-nav-button incident-nav-primary" id="incident-next">Weiter: Korrelieren →</button>
+    </div>
+  </div>
+</div>
+<script>
+  const incidentSteps = [{"id":"observe","index":"01","label":"Beobachten","eyebrow":"KUBERNETES / EREIGNISSE","heading":"Ein Workload startet immer wieder neu.","summary":"Der Pod payment-api scheitert wiederholt beim Start. Kubernetes meldet CrashLoopBackOff, doch dieser Status erklärt nicht die eigentliche Ursache.","evidenceTitle":"Beispielhafte kubectl-Belege","evidence":"$ kubectl get pods -n demo-app\\npayment-api-7d9f    0/1    CrashLoopBackOff    6    8m\\n\\n$ kubectl describe pod payment-api-7d9f -n demo-app\\nWarning  BackOff  Back-off restarting failed container","insightTitle":"Worauf es ankommt","insight":"Den Neustart als Symptom betrachten. Exit-Grund des Containers, aktuelle Events und Anwendungslogs prüfen, bevor eine Hypothese aufgestellt wird.","boundary":"Keine Live-Cluster-Verbindung. Alle Ereignisse sind synthetisch."},{"id":"correlate","index":"02","label":"Korrelieren","eyebrow":"BETRIEBLICHER KONTEXT","heading":"Dem Fehler ging eine Konfigurationsänderung voraus.","summary":"Die Zeitachse verbindet den ersten Neustart mit einem Deployment-Update. Vor dem Rollout der neuen Konfiguration war der Workload gesund.","evidenceTitle":"Synthetische Incident-Zeitachse","evidence":"09:41  Deployment-Rollout gestartet: payment-api Revision 18\\n09:42  ConfigMap payment-api-config aktualisiert\\n09:43  Container beendet sich beim Start (Exit-Code 1)\\n09:44  Wiederholte Neustarts; BackOff-Events nehmen zu","insightTitle":"Korrelierend signals","insight":"Der zeitliche Zusammenhang macht die Konfigurationsänderung zu einem wichtigen Prüfpunkt. Zeitliche Korrelation allein beweist keine Ursache.","boundary":"Die Zeitachse dient nur zur Illustration und enthält keine Produktivtelemetrie."},{"id":"reason","index":"03","label":"Analysieren","eyebrow":"KI-GESTÜTZTE UNTERSUCHUNG","heading":"Eine fehlende Einstellung ist die wahrscheinliche Ursache.","summary":"Synthetische Anwendungslogs zeigen, dass nach dem Rollout eine erforderliche Umgebungsvariable fehlt. Die Belege stützen eine Konfigurationshypothese.","evidenceTitle":"Synthetische Anwendungslogs","evidence":"2026-11-06T09:43:12Z INFO  Starte payment-api\\n2026-11-06T09:43:12Z ERROR Erforderliche Konfiguration fehlt: PAYMENT_PROVIDER_URL\\n2026-11-06T09:43:12Z FATAL Startvalidierung fehlgeschlagen","insightTitle":"Nachvollziehbare Analyse","insight":"Wahrscheinliche Ursache: Die aktuelle Workload-Konfiguration stellt PAYMENT_PROVIDER_URL nicht bereit. Vor einer Aktion mit dem Deployment-Manifest und der vorherigen Revision abgleichen.","boundary":"Dies ist eine vorgegebene Analyse, kein Live-KI-Modell und keine verifizierte Diagnose."},{"id":"recommend","index":"04","label":"Empfehlen","eyebrow":"EMPFOHLENE ABHILFE","heading":"Prüfen, korrigieren und validieren.","summary":"Statt eines undurchsichtigen Ein-Klick-Fixes erhalten Operators eine vorgeschlagene Abfolge von Prüfungen und Maßnahmen.","evidenceTitle":"Beispielhafter Maßnahmenplan","evidence":"1. Deployment-Variablen und ConfigMap-Verweise prüfen\\n2. Mit der letzten funktionierenden Revision vergleichen\\n3. Fehlende Einstellung per GitOps-Review wiederherstellen\\n4. Rollout-Bereitschaft und Anwendungszustand überwachen\\n5. Belege und Ergebnis in der Incident-Historie dokumentieren","insightTitle":"Empfehlung","insight":"Eine geprüfte GitOps-Änderung mit anschließender Validierung ist Ad-hoc-Eingriffen vorzuziehen. In dieser Demo werden keine Änderungen ausgeführt.","boundary":"Nur eine Empfehlung. Keine Schreibrechte und keine ausführbaren Aktionen."},{"id":"govern","index":"05","label":"Steuern","eyebrow":"RICHTLINIEN / MENSCHLICHE FREIGABE","heading":"Menschen autorisieren die Änderung.","summary":"Ein produktiver Ablauf würde Umfang, Richtlinien und Freigaben vor jeder zulässigen Remediation prüfen. In dieser Demo bleibt die Ausführung gesperrt.","evidenceTitle":"Simulierte Richtlinienprüfung","evidence":"Richtlinie: change-approval-required\\nRessource: deployment/payment-api\\nNamespace:  demo-app\\nRisiko:     Anwendungskonfiguration geändert\\nFreigabe:   NICHT ANGEFRAGT (DEMO)\\nAusführung: DEAKTIVIERT","insightTitle":"Governance-Grenze","insight":"Diese Demo endet bewusst bei der Empfehlung. Eine produktive Lösung erfordert eine separat geprüfte Autorisierung und einen Audit-Trail.","boundary":"Read-only-Demo ohne Freigabeanforderungen oder ausgeführte Maßnahmen."}];
+  const root = document.querySelector<HTMLElement>('[data-incident-explorer]');
+  if (root) {
+    let current = 0;
+    const stepButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-incident-step]'));
+    const previous = root.querySelector<HTMLButtonElement>('#incident-back');
+    const next = root.querySelector<HTMLButtonElement>('#incident-next');
+    const setText = (id: string, content: string) => {
+      const node = root.querySelector<HTMLElement>('#' + id);
+      if (node) node.textContent = content;
+    };
+    const select = (index: number) => {
+      if (index < 0 || index >= incidentSteps.length) return;
+      current = index;
+      const step = incidentSteps[index];
+      stepButtons.forEach((button, i) => {
+        const selected = i === current;
+        button.classList.toggle('is-active', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+      setText('incident-kicker', step.index + ' / ' + step.eyebrow);
+      setText('incident-heading', step.heading);
+      setText('incident-summary', step.summary);
+      setText('incident-insight-title', step.insightTitle);
+      setText('incident-insight-copy', step.insight);
+      setText('incident-boundary', step.boundary);
+      setText('incident-evidence-title', step.evidenceTitle);
+      setText('incident-evidence-code', step.evidence);
+      setText('incident-progress-label', 'SCHRITT ' + (current + 1) + ' VON ' + incidentSteps.length);
+      if (previous) previous.disabled = current === 0;
+      if (next) next.textContent = current === incidentSteps.length - 1 ? 'Demo neu starten ↺' : 'Weiter: ' + incidentSteps[current + 1].label + ' →';
+    };
+    stepButtons.forEach((button, i) => button.addEventListener('click', () => select(i)));
+    previous?.addEventListener('click', () => select(current - 1));
+    next?.addEventListener('click', () => select(current === incidentSteps.length - 1 ? 0 : current + 1));
+  }
+</script>
+<style>
+.incident-explorer{overflow:hidden;border:1px solid #294457;border-radius:18px;background:radial-gradient(ellipse at 80% 0%,#11405233,transparent 58%),#091320}
+.incident-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 25px;border-bottom:1px solid #254051;background:#0c1929}
+.incident-brand{display:flex;align-items:center;gap:12px;color:#f3f9ff;font:600 14px "Space Grotesk",sans-serif}
+.incident-diamond{display:grid;place-items:center;width:30px;height:30px;border:1px solid #4b93a1;border-radius:7px;color:#7ceff3;font-size:23px}
+.incident-slash{color:#55758a;margin:0 4px}
+.incident-simulation{color:#7ceff3;letter-spacing:1px;font:10px "DM Mono",monospace}
+.incident-intro{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:34px}
+.incident-intro h2{margin:12px 0;font-size:clamp(28px,3.5vw,45px);letter-spacing:-1.2px}
+.incident-intro h2 em{font-style:normal;color:#7ceff3}
+.incident-intro p{color:#b3c2d0;line-height:1.6;max-width:650px}
+.incident-status{display:flex;flex-direction:column;gap:6px;min-width:190px;padding:17px 19px;border:1px solid #335064;border-radius:11px;background:#102235}
+.incident-status span,.incident-status small{font:11px "DM Mono",monospace;color:#84a9ba}
+.incident-status strong{font:600 22px "Space Grotesk",sans-serif}
+.incident-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;padding:0 34px 23px}
+.incident-step{display:flex;gap:11px;align-items:flex-start;text-align:left;min-width:0;padding:16px 11px;border:1px solid #284052;border-radius:10px;background:#0d1c2c;color:#e8f2fa;cursor:pointer;transition:background .2s,border-color .2s}
+.incident-step:hover,.incident-step:focus-visible{border-color:#7ceff3}
+.incident-step:focus-visible{outline:2px solid #7ceff3;outline-offset:2px}
+.incident-step.is-active{background:#12303a;border-color:#65dfe7;box-shadow:inset 0 3px #7ceff3}
+.incident-step-index{color:#7ceff3;font:11px "DM Mono",monospace;padding-top:3px}
+.incident-step-text{display:flex;flex-direction:column;gap:6px;min-width:0}
+.incident-step-text strong{font-size:14px}
+.incident-step-text small{font-size:11px;line-height:1.4;color:#91acbd}
+.incident-detail{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 34px 24px;min-height:460px}
+.incident-detail-copy,.incident-evidence{min-width:0;padding:27px;border:1px solid #2b455a;border-radius:13px;background:#101f30}
+.incident-detail-copy{display:flex;flex-direction:column}
+.incident-kicker{font:11px "DM Mono",monospace;color:#7ceff3;letter-spacing:1px}
+.incident-detail-copy h3{margin:22px 0 14px;font:600 clamp(23px,2.3vw,31px) "Space Grotesk",sans-serif;line-height:1.2}
+.incident-detail-copy>p{margin:0 0 22px;line-height:1.7;color:#c1cedc}
+.incident-insight{padding:18px;border:1px solid #396171;border-radius:10px;background:#12313b}
+.incident-insight-label{font:600 12px "DM Mono",monospace;color:#7ceff3;letter-spacing:.3px}
+.incident-insight p,.incident-governance p{line-height:1.65;color:#c2d0df;margin:10px 0 0}
+.incident-governance{border-top:1px solid #30475a;margin-top:auto;padding-top:22px;margin-bottom:0}
+.incident-governance span{font:10px "DM Mono",monospace;letter-spacing:1px;color:#7ceff3}
+.incident-governance p{font-size:12px;color:#9db5c6}
+.incident-evidence{display:flex;flex-direction:column;background:#081420}
+.incident-evidence-head{display:flex;justify-content:space-between;gap:12px;color:#b4cad9;font:11px "DM Mono",monospace}
+.incident-evidence-head span:last-child{color:#7ceff3}
+.incident-evidence pre{flex:1;margin:24px 0 12px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#c9e8e5;font:12px/1.85 "DM Mono",monospace}
+.incident-evidence-foot{border-top:1px solid #304759;padding-top:15px;color:#8eacba;font:10px "DM Mono",monospace}
+.incident-live-dot{display:inline-block;width:7px;height:7px;margin-right:7px;background:#70e9d5;border-radius:50%}
+.incident-controls{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:0 34px 30px}
+.incident-controls>span{color:#88a8b9;font:11px "DM Mono",monospace}
+.incident-controls>div{display:flex;gap:10px}
+.incident-nav-button{padding:11px 17px;border-radius:8px;border:1px solid #36566c;color:#d2e5ef;background:#132235;cursor:pointer}
+.incident-nav-button:hover:not(:disabled){border-color:#7ceff3}
+.incident-nav-button:disabled{opacity:.4;cursor:not-allowed}
+.incident-nav-primary{background:#71e2e8;color:#071523;border-color:#71e2e8;font-weight:700}
+@media(max-width:1050px){.incident-steps{grid-template-columns:repeat(3,minmax(0,1fr))}.incident-detail{grid-template-columns:1fr}}
+@media(max-width:700px){.incident-toolbar,.incident-intro,.incident-controls{flex-direction:column;align-items:stretch}.incident-intro{padding:22px}.incident-status{min-width:0}.incident-steps{grid-template-columns:repeat(2,minmax(0,1fr));padding:0 18px 18px}.incident-detail{padding:0 18px 20px}.incident-detail-copy,.incident-evidence{padding:20px}.incident-controls{padding:0 18px 22px}.incident-controls>div{display:flex;flex-wrap:wrap}.incident-nav-button{flex:1}.incident-simulation{line-height:1.5}}
+@media(prefers-reduced-motion:reduce){.incident-step{transition:none}}
+</style>
