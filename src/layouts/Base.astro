@@ -7,14 +7,21 @@ const {
   noindex = false
 } = Astro.props;
 const path = Astro.url.pathname;
+const isDe = path === '/de/' || path.startsWith('/de/');
+const locale = isDe ? 'de' : 'en';
+const localPath = isDe ? (path.slice(3) || '/') : path;
+const localized = (href: string) => isDe ? (href === '/' ? '/de/' : `/de${href}`) : href;
+const alternatePath = isDe ? localPath : (path === '/' ? '/de/' : `/de${path}`);
+const enUrl = new URL(isDe ? localPath : path, 'https://kubernautic.com').toString();
+const deUrl = new URL(isDe ? path : alternatePath, 'https://kubernautic.com').toString();
 const canonical = new URL(path, 'https://kubernautic.com').toString();
 const siteUrl = 'https://kubernautic.com/';
 const nav = [
-  {href:'/platform/',label:'Platform'},
-  {href:'/agentic-ai/',label:'Agentic AI'},
-  {href:'/architecture/',label:'Architecture'},
-  {href:'/open-source/',label:'Open Source'},
-  {href:'/enterprise/',label:'Enterprise'}
+  {href:localized('/platform/'),label:isDe ? 'Plattform' : 'Platform'}, 
+  {href:localized('/agentic-ai/'),label:'Agentic AI'}, 
+  {href:localized('/architecture/'),label:isDe ? 'Architektur' : 'Architecture'}, 
+  {href:localized('/open-source/'),label:'Open Source'}, 
+  {href:localized('/enterprise/'),label:'Enterprise'}
 ];
 const structuredData = {
   '@context': 'https://schema.org',
@@ -24,7 +31,7 @@ const structuredData = {
       '@id': siteUrl + '#website',
       name: 'Kubernautic',
       url: siteUrl,
-      inLanguage: 'en',
+      inLanguage: locale,
       description: 'Agentic AI for Kubernetes operations, with explainable recommendations and human oversight.'
     },
     {
@@ -41,7 +48,7 @@ const structuredData = {
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,9 +58,12 @@ const structuredData = {
   <meta name="color-scheme" content="dark" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="de" href={deUrl} />
+  <link rel="alternate" hreflang="x-default" href={enUrl} />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kubernautic" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content={isDe ? 'de_DE' : 'en_US'} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
@@ -75,18 +85,18 @@ const structuredData = {
   <div class="site-glow" aria-hidden="true"></div>
   <header class="site-header">
     <div class="shell nav-wrap">
-      <a class="brand" href="/" aria-label="Kubernautic Home"><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a>
+      <a class="brand" href={localized('/')} aria-label={isDe ? 'Kubernautic Startseite' : 'Kubernautic Home'}><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a>
       <nav class="desktop-nav" aria-label="Primary navigation">
         {nav.map(item => <a class:list={['nav-link', {'active':path===item.href}]} href={item.href}>{item.label}</a>)}
       </nav>
-      <div class="nav-actions"><a class="nav-demo" href="/console/">Console Preview <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button></div>
+      <div class="nav-actions"><a class="locale-switch" href={alternatePath} lang={isDe ? 'en' : 'de'} hreflang={isDe ? 'en' : 'de'} aria-label={isDe ? 'Switch to English' : 'Zur deutschen Version wechseln'}>{isDe ? 'EN' : 'DE'}</a><a class="nav-demo" href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'} <span aria-hidden="true">↗</span></a><button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button></div>
     </div>
-    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>{nav.map(item => <a href={item.href}>{item.label}</a>)}<a href="/console/">Console Preview</a></nav>
+    <nav id="mobile-nav" class="mobile-nav" aria-label={isDe ? 'Mobile Navigation' : 'Mobile navigation'} hidden>{nav.map(item => <a href={item.href}>{item.label}</a>)}<a href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'}</a><a href={alternatePath}>{isDe ? 'English' : 'Deutsch'}</a></nav>
   </header>
   <main><slot /></main>
   <footer class="footer">
-    <div class="shell footer-grid"><div><a class="brand" href="/"><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a><p>Intelligence for cloud-native operations.<br/>Built on open foundations.</p></div><div class="footer-col"><strong>Explore</strong><a href="/platform/">Platform</a><a href="/agentic-ai/">Agentic AI</a><a href="/architecture/">Architecture</a></div><div class="footer-col"><strong>Connect</strong><a href="/console/">Console Preview</a><a href="/enterprise/">Enterprise</a><a href="/contact/">Contact</a></div><div class="footer-col"><strong>Ecosystem</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/open-source/">Open source</a></div></div>
-    <div class="shell footer-bottom"><span>© {new Date().getFullYear()} Kubernautic. A concept in the OpenKubes ecosystem.</span><span>Open systems. Human control.</span></div>
+    <div class="shell footer-grid"><div><a class="brand" href={localized('/')}><img class="brand-mark" src="/kubernautic-mark.svg" alt="" width="34" height="34" decoding="async" /><BrandWordmark /></a><p>{isDe ? 'Intelligenz für Cloud-native Operations.' : 'Intelligence for cloud-native operations.'}<br/>{isDe ? 'Auf offenen Grundlagen aufgebaut.' : 'Built on open foundations.'}</p></div><div class="footer-col"><strong>{isDe ? 'Entdecken' : 'Explore'}</strong><a href={localized('/platform/')}>{isDe ? 'Plattform' : 'Platform'}</a><a href={localized('/agentic-ai/')}>Agentic AI</a><a href={localized('/architecture/')}>{isDe ? 'Architektur' : 'Architecture'}</a></div><div class="footer-col"><strong>{isDe ? 'Kontakt' : 'Connect'}</strong><a href={localized('/console/')}>{isDe ? 'Console-Vorschau' : 'Console Preview'}</a><a href={localized('/enterprise/')}>Enterprise</a><a href={localized('/contact/')}>{isDe ? 'Kontakt' : 'Contact'}</a></div><div class="footer-col"><strong>Ecosystem</strong><a href="https://openkubes.org" target="_blank" rel="noopener noreferrer">OpenKubes ↗</a><a href="https://github.com/openkubes" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={localized('/open-source/')}>Open Source</a></div></div>
+    <div class="shell footer-bottom"><span>© {new Date().getFullYear()} Kubernautic. {isDe ? 'Ein Konzept im OpenKubes-Ökosystem.' : 'A concept in the OpenKubes ecosystem.'}</span><span>{isDe ? 'Offene Systeme. Menschliche Kontrolle.' : 'Open systems. Human control.'}</span></div>
   </footer>
   <script>
     const toggle = document.querySelector('.menu-toggle');
