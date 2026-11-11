@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import IncidentExplorer from '../../components/de/IncidentExplorer.astro';
+---
+<Base title="Kubernetes Incident Demo: CrashLoopBackOff | Kubernautic" description="Interaktive simulierte Kubernetes-CrashLoopBackOff-Analyse mit Belegen, KI-gestützter Ursachenanalyse, Empfehlungen und menschlicher Kontrolle.">
+<section class="shell page-hero incident-page-hero"><span class="eyebrow">PRODUKTERFAHRUNG / INTERAKTIVE DEMO</span><h1>Vom Incident-Rauschen<br/><span class="gradient-text">zu operativer Klarheit.</span></h1><p>Erleben Sie einen simulierten Kubernetes-Incident. Entdecken Sie, wie Belege, Kontext und KI-gestützte Empfehlungen bei Entscheidungen helfen können – ohne einen echten Cluster zu verändern.</p><div class="button-group"><a class="btn btn-primary" href="#incident-experience">Geführte Demo starten ↗</a><a class="btn btn-secondary" href="/de/architecture/">Architektur entdecken ↗</a></div></section>
+<section class="shell incident-section" id="incident-experience"><IncidentExplorer/></section>
+<section class="shell section single-section incident-next"><div class="note-panel"><div><span class="eyebrow">DIE ECHTE CONSOLE / SPÄTER VERFÜGBAR</span><h2>Als Nächstes: eine Read-only-Vorschau.</h2><p>Diese Demo zeigt ein statisches, synthetisches Szenario. Die separat geplante registrierte Console-Vorschau soll einen begrenzten Read-only-Zugriff auf einen gemeinsamen Demo-Cluster nutzen. Hier sind weder Anmeldung noch Cluster-Anbindung oder die Ausführung von Remediation möglich.</p></div><a class="btn btn-primary" href="/de/contact/">Early Access anfragen ↗</a></div>
+<div class="info-line"><strong>Demo</strong>Statisches Szenario, keine echten Kubernetes-API-Aufrufe</div>
+<div class="info-line"><strong>Sicherheit</strong>Keine Änderungen, Zugangsdaten oder Ausführung</div>
+<div class="info-line"><strong>Produktion</strong>Dedizierte Console-Installation wird individuell geprüft</div></section></Base>
