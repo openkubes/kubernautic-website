@@ -1,0 +1,305 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const controls = [
+  { no: '01', icon: '⌑', title: 'Identität & minimale Berechtigungen', description: 'Identitätsgrenzen, Service-Account-Rechte, RBAC und Zugriffsprüfungen festlegen, bevor Integrationen Berechtigungen erhalten.' },
+  { no: '02', icon: '◇', title: 'Entscheidungen unter menschlicher Kontrolle', description: 'Beobachtung, Empfehlungen und Ausführung trennen. Freigabewege und Richtlinienprüfungen sind Bestandteil der Produktivarchitektur.' },
+  { no: '03', icon: '◎', title: 'Datenverarbeitung & Souveränität', description: 'Prüfen, wo Telemetrie, Prompts, Modell-Inferenz, Logs und Audit-Daten verarbeitet und aufbewahrt werden.' },
+  { no: '04', icon: '⌁', title: 'Auditierbarkeit & Change Control', description: 'Nachvollziehbare Entscheidungen, Änderungshistorie, GitOps-Integration und überprüfbare Ergebnisse vorsehen.' },
+  { no: '05', icon: '▣', title: 'Betriebliche Isolation', description: 'Umgebungsgrenzen, Netzwerkrichtlinien, ausgehenden Zugriff und Auswirkungen von Fehlern für jede Installation bewerten.' },
+  { no: '06', icon: '✳', title: 'KI-Leitplanken', description: 'Tool-Berechtigungen, Prompt- und Datengrenzen, Fehlerfälle sowie Schutz vor unautorisierten Aktionen prüfen.' }
+];
+
+const technicalDetails = {
+  '01': 'OIDC-Integration, Namespace- und Cluster-Berechtigungen, Service-Account-Tokens und regelmäßige Rechte-Audits prüfen.',
+  '02': 'Reinen Empfehlungsmodus, Freigaben, erlaubte Aktionen und Aufgabentrennung vor produktiver Nutzung definieren.',
+  '03': 'Ort der Inferenz, ausgehende Verbindungen, Telemetriefilter, Speicherfristen und Vereinbarungen mit Modellanbietern dokumentieren.',
+  '04': 'Vorgeschlagene Änderungen mit GitOps-Pull-Requests, Freigaben, Richtlinienentscheidungen und unveränderbaren Betriebsprotokollen verknüpfen.',
+  '05': 'Netzwerkwege, Mandantengrenzen, Secret-Verwaltung und Fehlerradien jeder dedizierten Installation im Threat Model berücksichtigen.',
+  '06': 'Agenten-Tools begrenzen, Ein- und Ausgaben validieren, Prompt-Injection-Risiken bewerten und sichere Fehlerzustände definieren.'
+};
+
+const review = [
+  { question: 'Wo wird die Console betrieben?', answer: 'Für den Produktivbetrieb prüfen wir eine dedizierte Umgebung entsprechend Ihrer Infrastruktur und Betriebsanforderungen. On-Premises und Private Cloud erfordern eine Architekturprüfung.' },
+  { question: 'Erhält die KI Cluster-Admin-Zugriff?', answer: 'Nein, es gibt keine pauschalen Rechte. Für jede Integration müssen minimale Berechtigungen festgelegt werden; Schreibzugriffe und Agenten-Tools benötigen eine eigene Risikoanalyse und Freigabe.' },
+  { question: 'Verlassen Logs oder Prompts unsere Umgebung?', answer: 'Das hängt vom gewählten Modell und Hosting ab. Datenflüsse, Anbieter, Speicherfristen und Datenstandorte müssen vor der Installation dokumentiert und vereinbart werden.' },
+  { question: 'Ist die öffentliche Demo ein produktives Multi-Tenant-Angebot?', answer: 'Nein. Die geführte Incident-Demo ist synthetisch. Eine registrierte Read-only-Vorschau auf einem gemeinsamen Demo-Cluster ist separat geplant. Ein produktives Multi-Tenant-Angebot wurde nicht zugesagt.' }
+];
+---
+<Base title="Enterprise Kubernetes AI Operations & Sicherheit | Kubernautic" description="Dedizierte Kubernautic-Installationen: Identity, Zugriffsgrenzen, KI-Governance, Datenverarbeitung und Security-Architektur.">
+  <section class="shell page-hero enterprise-hero">
+    <span class="eyebrow">ENTERPRISE / GEZIELTE INSTALLATION</span>
+    <h1>Ihre Infrastruktur.<br/><span class="gradient-text">Ihre Richtlinien. Ihre Kontrolle.</span></h1>
+    <p>Entdecken Sie eine dedizierte Kubernautic-Operations-Lösung, die auf Ihre Kubernetes-Landschaft, Sicherheitsanforderungen und Betriebsprozesse zugeschnitten ist – mit menschlicher Kontrolle im Mittelpunkt.</p>
+    <div class="button-group">
+      <a class="btn btn-primary" href="/de/contact/">Enterprise-Installation besprechen <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-secondary" href="/de/architecture/">Architektur entdecken <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="enterprise-hero-note"><span aria-hidden="true">◇</span> Produktive Installationen werden individuell geplant. Es wird keine pauschale Sicherheits- oder Compliance-Zertifizierung behauptet.</div>
+  </section>
+
+  <section class="enterprise-overview shell" aria-labelledby="enterprise-overview-title">
+    <div class="enterprise-section-title">
+      <span class="eyebrow">01 / BETRIEBSMODELL</span>
+      <h2 id="enterprise-overview-title">Dediziert von Anfang an.<br/><em>Integration nach Ihren Vorgaben.</em></h2>
+      <p>Ausgangspunkt sind Ihre Infrastruktur und Ihr Risikoprofil – nicht die Annahme, dass produktive Kunden sich eine Control Plane teilen sollten.</p>
+    </div>
+    <div class="enterprise-diagram" aria-label="Beispiel eines dedizierten Betriebsmodells">
+      <div class="enterprise-diagram-caption"><span>KONZEPTIONELLES REFERENZMODELL</span><span>KEINE LIVE-INSTALLATION</span></div>
+      <div class="enterprise-diagram-grid">
+        <div class="enterprise-diagram-card enterprise-customer">
+          <span class="enterprise-mini-label">KUNDENUMGEBUNG</span>
+          <strong>Enterprise Kubernetes</strong>
+          <p>Cluster · Workloads · Telemetrie</p>
+          <div class="enterprise-chip-row"><span>Kubernetes API</span><span>Observability</span><span>GitOps</span></div>
+        </div>
+        <div class="enterprise-diagram-link" aria-hidden="true"><span>BEGRENZTE INTEGRATIONEN</span><b>⟷</b></div>
+        <div class="enterprise-diagram-card enterprise-control">
+          <span class="enterprise-mini-label">DEDIZIERTE BETRIEB-EBENE</span>
+          <strong>Kubernautic Console</strong>
+          <p>Kontext · Erkenntnisse · Empfehlungen</p>
+          <div class="enterprise-chip-row"><span>Identität & RBAC</span><span>Richtlinienfreigaben</span><span>Audit</span></div>
+        </div>
+      </div>
+      <div class="enterprise-diagram-boundary">◇ Sicherheits-, Netzwerk- und Datenflussgrenzen werden bei der Architekturprüfung vereinbart.</div>
+    </div>
+    <div class="enterprise-value-grid">
+      <article><span>01 / VERANTWORTUNG</span><h3>Infrastrukturkontrolle</h3><p>Hosting, Zugriff und Netzwerk entsprechend kundenspezifischen Anforderungen planen.</p></article>
+      <article><span>02 / BETRIEB</span><h3>In bestehende Prozesse integriert</h3><p>Zusammenspiel mit Kubernetes, GitOps und bestehenden Observability-Systemen prüfen.</p></article>
+      <article><span>03 / RISIKO</span><h3>Keine gemeinsame Mandantenumgebung als Standard</h3><p>Isolation und Kontrollmechanismen prüfen, bevor ein Multi-Tenant-Modell überhaupt infrage kommt.</p></article>
+    </div>
+  </section>
+
+  <section class="enterprise-security" aria-labelledby="enterprise-security-title">
+    <div class="shell">
+      <div class="enterprise-section-title">
+        <span class="eyebrow">02 / SICHERHEIT & GOVERNANCE</span>
+        <h2 id="enterprise-security-title">Vertrauen ist eine <em>Architekturentscheidung.</em></h2>
+        <p>Enterprise AI Operations brauchen klare Grenzen. Diese Punkte besprechen wir vor jeder produktiven Einführung.</p>
+      </div>
+      <div class="enterprise-control-grid">
+        {controls.map(control => (
+          <article class="enterprise-control-card">
+            <button
+              class="security-flip-trigger"
+              type="button"
+              aria-pressed="false"
+              aria-label={`${control.title}. ${control.description} Technical details: ${technicalDetails[control.no]}. Press to turn the card.`}
+            >
+              <span class="security-flip-inner" aria-hidden="true">
+                <span class="security-flip-face security-flip-front">
+                  <span class="enterprise-control-top"><span>{control.no} / KONTROLLBEREICH</span><span>{control.icon}</span></span>
+                  <strong class="security-flip-title">{control.title}</strong>
+                  <span class="security-flip-description">{control.description}</span>
+                  <span class="security-flip-hint">HOVER ODER KLICK FÜR DETAILS ↗</span>
+                </span>
+                <span class="security-flip-face security-flip-back">
+                  <span class="enterprise-control-top"><span>{control.no} / TECHNISCHE ASPEKTE</span><span>◇</span></span>
+                  <strong class="security-flip-title">{control.title}</strong>
+                  <span class="security-flip-description">{technicalDetails[control.no]}</span>
+                  <span class="security-flip-hint">MAUS ENTFERNEN ODER KLICK ZURÜCK ↶</span>
+                </span>
+              </span>
+            </button>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell enterprise-process" aria-labelledby="enterprise-process-title">
+    <div class="enterprise-section-title">
+      <span class="eyebrow">03 / UNSERE ZUSAMMENARBEIT</span>
+      <h2 id="enterprise-process-title">Von der Bewertung<br/>zum <em>gemeinsamen Entwerfen.</em></h2>
+      <p>Eine produktive Installation ist ein Projekt – keine Ein-Klick-Registrierung.</p>
+    </div>
+    <div class="enterprise-process-grid">
+      <article><span>01</span><h3>Verstehen</h3><p>Workloads, Stakeholder-Ziele, Identity-Modell und betriebliche Verantwortlichkeiten erfassen.</p></article>
+      <article><span>02</span><h3>Prüfen</h3><p>Threat Model, Datenwege, Integrationen und nötige Plattformrechte analysieren.</p></article>
+      <article><span>03</span><h3>Entwerfen</h3><p>Architektur, Governance, Installationsumfang und Abnahmekriterien abstimmen.</p></article>
+      <article><span>04</span><h3>Validieren</h3><p>Einen kontrollierten Proof of Concept vor einer Produktiventscheidung planen.</p></article>
+    </div>
+  </section>
+
+  <section class="enterprise-questions" aria-labelledby="enterprise-questions-title">
+    <div class="shell enterprise-questions-layout">
+      <div class="enterprise-questions-intro">
+        <span class="eyebrow">04 / ENTSCHEIDENDE FRAGEN</span>
+        <h2 id="enterprise-questions-title">Stellen Sie die <em>wichtigen Fragen.</em></h2>
+        <p>Diese Fragen sollten Enterprise-Architektur- und Security-Teams klären, bevor autonome Operations infrage kommen.</p>
+      </div>
+      <div class="enterprise-faq">
+        {review.map((item, index) => (
+          <details class="enterprise-faq-item" open={index === 0}>
+            <summary>{item.question}<span aria-hidden="true">+</span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell enterprise-bottom">
+    <div class="enterprise-bottom-panel">
+      <span class="eyebrow">BEREIT FÜR EIN ARCHITEKTURGESPRÄCH?</span>
+      <h2>Bringen Sie Ihre Anforderungen mit.<br/><em>Wir entwickeln die passende Architektur.</em></h2>
+      <p>Erzählen Sie uns von Ihrer Kubernetes-Umgebung, den Sicherheitsanforderungen und Ihren Betriebszielen. Gemeinsam prüfen wir eine dedizierte Kubernautic-Installation.</p>
+      <div class="button-group">
+        <a class="btn btn-primary" href="/de/contact/">Gespräch beginnen <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-secondary" href="/de/console/">Geführte Incident-Demo testen <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="enterprise-disclaimer">Die interaktive Incident-Demo ist synthetisch. Eine registrierte Read-only-Console-Vorschau ist geplant. Diese Website stellt kein zertifiziertes oder allgemein verfügbares Produktionsangebot dar.</p>
+    </div>
+  </section>
+</Base>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.security-flip-trigger').forEach((button) => {
+    button.addEventListener('click', () => {
+      const flipped = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!flipped));
+    });
+  });
+</script>
+
+
+<style>
+.enterprise-hero{padding-bottom:80px}
+.enterprise-hero p{max-width:660px}
+.enterprise-hero-note{display:flex;gap:12px;align-items:center;max-width:780px;margin-top:30px;color:#92a9bc;font:11px/1.6 "DM Mono",monospace}
+.enterprise-hero-note span{color:#7ceff3;font-size:20px}
+.enterprise-section-title{max-width:790px;margin-bottom:40px}
+.enterprise-section-title h2,.enterprise-questions h2,.enterprise-bottom h2{font-size:clamp(34px,4.2vw,55px);line-height:1.12;letter-spacing:-2px;margin:18px 0 22px}
+.enterprise-section-title h2 em,.enterprise-questions h2 em,.enterprise-bottom h2 em{color:#7ceff3;font-style:normal}
+.enterprise-section-title p,.enterprise-questions-intro p,.enterprise-bottom-panel>p{max-width:680px;line-height:1.75;color:#b1c3d3}
+.enterprise-overview{padding:35px 0 110px}
+.enterprise-diagram{border:1px solid #315063;border-radius:18px;padding:30px;background:radial-gradient(ellipse at 70% 18%,rgba(39,131,147,.16),transparent 65%),#0b1626}
+.enterprise-diagram-caption{display:flex;justify-content:space-between;gap:14px;color:#7ceff3;font:10px "DM Mono",monospace;letter-spacing:1px}
+.enterprise-diagram-grid{display:grid;grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);align-items:center;gap:20px;margin:32px 0}
+.enterprise-diagram-card{min-width:0;padding:27px;border:1px solid #315468;border-radius:14px;background:linear-gradient(150deg,#14293a,#0d1b2e)}
+.enterprise-mini-label{font:10px "DM Mono",monospace;letter-spacing:1.1px;color:#7ceff3}
+.enterprise-diagram-card strong{display:block;margin:17px 0 8px;font:600 clamp(21px,2vw,26px) "Space Grotesk",sans-serif}
+.enterprise-diagram-card p{color:#b2c5d4;margin:0 0 22px;font-size:13px}
+.enterprise-chip-row{display:flex;gap:7px;flex-wrap:wrap}
+.enterprise-chip-row span{border:1px solid #38566a;border-radius:5px;color:#bed7e2;padding:7px 9px;font:10px "DM Mono",monospace}
+.enterprise-diagram-link{text-align:center;color:#83cfd6;font:9px "DM Mono",monospace;letter-spacing:1px}
+.enterprise-diagram-link b{display:block;font-size:39px;font-weight:400;margin-top:10px;color:#7ceff3}
+.enterprise-diagram-boundary{border-top:1px solid #294657;padding-top:21px;color:#a7c0cd;font:11px/1.6 "DM Mono",monospace}
+.enterprise-value-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+.enterprise-value-grid article{padding:24px;border:1px solid #21394d;border-radius:12px;background:#0c1727}
+.enterprise-value-grid article>span,.enterprise-control-top,.enterprise-process-grid article>span{font:10px "DM Mono",monospace;letter-spacing:1px;color:#7ceff3}
+.enterprise-value-grid h3,.enterprise-control-card h3,.enterprise-process h3{font-size:21px;margin:18px 0 10px}
+.enterprise-value-grid p,.enterprise-control-card p,.enterprise-process p{margin:0;color:#aec2d0;line-height:1.7;font-size:14px}
+.enterprise-security{padding:104px 0;background:#0b1321;border-top:1px solid #1d3345;border-bottom:1px solid #1d3345}
+.enterprise-control-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.enterprise-control-card{padding:29px;border:1px solid #2a4457;border-radius:14px;background:linear-gradient(145deg,#122337,#0d1a2a);min-height:260px}
+.enterprise-control-top{display:flex;justify-content:space-between;align-items:center}
+.enterprise-control-top span:last-child{font-size:25px}
+.enterprise-process{padding-top:105px;padding-bottom:105px}
+.enterprise-process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.enterprise-process-grid article{border-top:1px solid #36738a;padding:22px 15px 0 0}
+.enterprise-process-grid article>span{font-size:19px}
+.enterprise-questions{background:#0c1625;padding:100px 0;border-block:1px solid #203749}
+.enterprise-questions-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}
+.enterprise-faq{display:flex;flex-direction:column;gap:11px}
+.enterprise-faq-item{border:1px solid #2c485a;border-radius:10px;background:#101e2f;padding:0 22px}
+.enterprise-faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:20px;cursor:pointer;font-weight:600;padding:20px 0;list-style:none}
+.enterprise-faq-item summary::-webkit-details-marker{display:none}
+.enterprise-faq-item summary span{color:#7ceff3;font-size:21px}
+.enterprise-faq-item[open] summary span{transform:rotate(45deg)}
+.enterprise-faq-item p{color:#afc5d3;line-height:1.7;margin:0;padding-bottom:21px}
+.enterprise-bottom{padding:100px 0}
+.enterprise-bottom-panel{position:relative;overflow:hidden;border:1px solid #386c77;background:radial-gradient(ellipse at 85% 8%,rgba(77,221,221,.15),transparent 60%),linear-gradient(135deg,#112838,#091522);border-radius:20px;padding:65px}
+.enterprise-bottom-panel>p{max-width:690px}
+.enterprise-disclaimer{margin-top:34px!important;font-size:12px!important;line-height:1.6!important;color:#93aaba!important}
+@media(max-width:1000px){.enterprise-diagram-grid{grid-template-columns:1fr;gap:7px}.enterprise-diagram-link b{margin:0;transform:rotate(90deg)}.enterprise-diagram-link{padding:10px}.enterprise-value-grid,.enterprise-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.enterprise-questions-layout{grid-template-columns:1fr;gap:25px}.enterprise-process-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:35px}}
+@media(max-width:620px){.enterprise-hero{padding-bottom:60px}.enterprise-overview{padding-bottom:65px}.enterprise-diagram{padding:18px}.enterprise-diagram-caption{flex-direction:column}.enterprise-value-grid,.enterprise-control-grid,.enterprise-process-grid{grid-template-columns:1fr}.enterprise-security,.enterprise-questions,.enterprise-bottom{padding:65px 0}.enterprise-process{padding-top:65px;padding-bottom:65px}.enterprise-bottom-panel{padding:30px 20px}.enterprise-control-card{min-height:0}}
+@media(prefers-reduced-motion:reduce){.enterprise-faq-item summary span{transition:none}}
+
+/* Stable 180-degree flip: the hit target never rotates, preventing hover jitter. */
+.enterprise-control-card {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  min-height: 280px;
+  perspective: 1100px;
+}
+.security-flip-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.security-flip-trigger:focus-visible {
+  outline: 2px solid #7ceff3;
+  outline-offset: 5px;
+}
+.security-flip-inner {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  transform-style: preserve-3d;
+  transition: transform 650ms cubic-bezier(.2,.72,.25,1);
+}
+.security-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 27px;
+  border: 1px solid #2a4457;
+  border-radius: 14px;
+  background: linear-gradient(145deg,#122337,#0d1a2a);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.security-flip-back {
+  transform: rotateY(180deg);
+  border-color: #43818c;
+  background: linear-gradient(145deg,#133543,#0b202d);
+}
+.security-flip-title {
+  display: block;
+  margin: 20px 0 10px;
+  font: 600 21px "Space Grotesk",sans-serif;
+}
+.security-flip-description {
+  display: block;
+  color: #aec2d0;
+  line-height: 1.65;
+  font-size: 14px;
+}
+.security-flip-hint {
+  display: block;
+  margin-top: auto;
+  padding-top: 17px;
+  color: #7ceff3;
+  font: 10px "DM Mono",monospace;
+  letter-spacing: .35px;
+}
+.security-flip-trigger[aria-pressed="true"] .security-flip-inner {
+  transform: rotateY(180deg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .security-flip-trigger:hover .security-flip-inner {
+    transform: rotateY(180deg);
+  }
+  .security-flip-trigger[aria-pressed="true"]:hover .security-flip-inner {
+    transform: rotateY(0deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .security-flip-inner {
+    transition: none !important;
+  }
+}
+</style>
