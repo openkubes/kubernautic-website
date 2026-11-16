@@ -1045,7 +1045,7 @@ h2 {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2.2fr repeat(3, 1fr);
+  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
   gap: 40px;
   padding: 62px 0;
 }
@@ -1308,7 +1308,7 @@ h2 {
     grid-template-columns: 2fr 1fr 1fr;
   }
   .footer-grid .footer-col:last-child {
-    grid-column: 2;
+    grid-column: auto;
   }
 }
 @media (max-width: 620px) {
