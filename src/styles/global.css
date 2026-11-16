@@ -1308,7 +1308,7 @@ h2 {
     grid-template-columns: 2fr 1fr 1fr;
   }
   .footer-grid .footer-col:last-child {
-    grid-column: 2;
+    grid-column: auto;
   }
 }
 @media (max-width: 620px) {
