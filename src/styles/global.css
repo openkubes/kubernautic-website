@@ -1540,3 +1540,8 @@ h2 {
 .incident-section { padding-bottom: 15px; }
 .incident-next { padding-top: 70px; }
 @media (max-width: 620px) { .incident-next { padding-top: 45px; } }
+
+/* Legal links remain visible in the footer across screen sizes. */
+.footer-legal { display:inline-flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.footer-legal a { color:#9cb6c9; text-decoration:underline; text-underline-offset:3px; }
+.footer-legal a:hover, .footer-legal a:focus-visible { color:#73e2e8; }
