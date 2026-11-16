@@ -1045,7 +1045,7 @@ h2 {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2.2fr repeat(3, 1fr);
+  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
   gap: 40px;
   padding: 62px 0;
 }
